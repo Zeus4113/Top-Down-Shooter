@@ -20,7 +20,6 @@ public class Bruiser : MonoBehaviour, INavigable
         GetComponentInChildren<AttackTrigger>().Init();
         gameObject.GetComponentInChildren<Health>().Init();
         currentState = state.wandering;
-        currentSpeed = 4.0f;
         FindNewPosition();
     }
 
