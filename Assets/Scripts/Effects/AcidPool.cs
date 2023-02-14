@@ -38,15 +38,21 @@ public class AcidPool : MonoBehaviour
         {
             if(myObject != null)
             {
-                if (myObject.gameObject.GetComponent<Health>() != null)
+                if (myObject.GetComponent<Health>() != null)
                 {
-                    if (myObject.gameObject.GetComponents<Shooter>().Length != 0)
+                    switch (myObject.GetComponent<Health>().CheckResistance())
                     {
-                        myObject.GetComponent<Health>().Heal(damage);
-                    }
-                    else
-                    {
-                        myObject.GetComponent<Health>().Damage(damage);
+                        case DamageType.fire:
+                            myObject.GetComponent<Health>().Damage(damage);
+                            break;
+
+                        case DamageType.acid:
+                            myObject.GetComponent<Health>().Heal(damage);
+                            break;
+
+                        case DamageType.lightning:
+                            myObject.GetComponent<Health>().Damage(damage);
+                            break;
                     }
                 }
             }

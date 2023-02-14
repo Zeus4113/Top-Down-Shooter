@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float currentHealth;
-    [SerializeField] private GameObject firePrefab;
-    [SerializeField] private bool isBruiser;
+    [SerializeField] private float m_maxHealth;
+    [SerializeField] private GameObject m_firePrefab;
+    [SerializeField] private bool m_fireResistance;
+    [SerializeField] private bool m_acidResistance;
+    [SerializeField] private bool m_electricalResistance;
 
     private bool isIgnited;
     private GameObject myFire;
+    private float m_currentHealth;
 
     public delegate void healthPickup();
     public static healthPickup myHealthPickup;
 
     public void Init()
     {
-        currentHealth = maxHealth;
+        m_currentHealth = m_maxHealth;
         myHealthPickup = HealthPickup;
     }
 
@@ -44,32 +46,32 @@ public class Health : MonoBehaviour
 
     public void Heal(float health)
     {
-        currentHealth += health;
+        m_currentHealth += health;
     }
 
     public void Damage(float damage)
     {
-        currentHealth -= damage;
+        m_currentHealth -= damage;
     }
 
     public void SetHealth(float health)
     {
-        currentHealth = health;
+        m_currentHealth = health;
     }
 
     public float GetHealth()
     {
-        return currentHealth;
+        return m_currentHealth;
     }
 
     public float GetMaxHealth()
     {
-        return maxHealth;
+        return m_maxHealth;
     }
 
     public bool IsAlive()
     {
-        if (currentHealth <= 0)
+        if (m_currentHealth <= 0)
         {
             Destroy(gameObject);
             if(myFire != null)
@@ -102,7 +104,7 @@ public class Health : MonoBehaviour
         {
             isIgnited = true;
             StartCoroutine(Ignited(tickDamage, duration));
-            myFire = Instantiate(firePrefab, transform.position, transform.rotation);
+            myFire = Instantiate(m_firePrefab, transform.position, transform.rotation);
             myFire.transform.localScale = transform.localScale * 1.5f;
         }
     }
@@ -111,7 +113,7 @@ public class Health : MonoBehaviour
     {
         for(int i = 0; i < duration; i++)
         {
-            if (isBruiser)
+            if (m_fireResistance)
             {
                 Heal(tickDamage);
             }
@@ -132,12 +134,37 @@ public class Health : MonoBehaviour
     {
         if (gameObject.CompareTag("Player"))
         {
-            currentHealth += (maxHealth / 2);
-            if (maxHealth > currentHealth)
+            m_currentHealth += (m_maxHealth / 2);
+            if (m_maxHealth > m_currentHealth)
             {
-                currentHealth = maxHealth;
+                m_currentHealth = m_maxHealth;
             }
         }
     }
 
+    public DamageType CheckResistance()
+    {
+        if (m_fireResistance)
+        {
+            return DamageType.fire;
+        }
+        else if (m_acidResistance)
+        {
+            return DamageType.acid;
+        }
+        else if (m_electricalResistance)
+        {
+            return DamageType.lightning;
+        }
+
+        return 0;
+    }
+
+}
+
+public enum DamageType
+{
+    fire,
+    acid,
+    lightning
 }
