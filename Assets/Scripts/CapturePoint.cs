@@ -11,7 +11,6 @@ public class CapturePoint : MonoBehaviour
     private bool isComplete;
     private float currentCount;
     private float maxCount;
-    private float delay;
     private SpriteRenderer spriteRenderer;
 
     private void Start()
@@ -19,7 +18,6 @@ public class CapturePoint : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerPresent = false;
         isComplete = false;
-        delay = 2f;
         currentCount = 0;
         maxCount = 15;
     }
