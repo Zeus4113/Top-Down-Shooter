@@ -14,7 +14,7 @@ public class AcidPool : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision != null)
+        if(collision.gameObject != null)
         {        
             StartCoroutine(Damage(collision.gameObject));
 
@@ -40,26 +40,26 @@ public class AcidPool : MonoBehaviour
             {
                 if (myObject.GetComponent<Health>() != null)
                 {
+                    float health = myObject.GetComponent<Health>().GetHealth();
+
                     switch (myObject.GetComponent<Health>().CheckResistance())
                     {
-                        case DamageType.fire:
-                            myObject.GetComponent<Health>().Damage(damage);
-                            break;
-
                         case DamageType.acid:
+
+                            Debug.Log("Healing (Acid): " + health);
                             myObject.GetComponent<Health>().Heal(damage);
                             break;
 
-                        case DamageType.lightning:
+                        default:
+                            Debug.Log("Damaging (Acid): " + health);
                             myObject.GetComponent<Health>().Damage(damage);
                             break;
+
                     }
                 }
             }
-
             yield return new WaitForSeconds(1);
         }
-
         yield return null;
     }
 }

@@ -12,6 +12,7 @@ public class BasicEnemy : MonoBehaviour
     private float m_defaultSpeed;
     private Rigidbody2D m_rigidbody;
     private bool m_attackReset;
+    private Health m_healthComponent;
 
     // Editor member variables
     [SerializeField] private float m_movementSpeed;
@@ -24,6 +25,8 @@ public class BasicEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_healthComponent = gameObject.GetComponent<Health>();
+        m_healthComponent.Init();
         m_currentState = state.wandering;
         m_newPosition = FindNewPatrolPosition();
         m_defaultSpeed = m_movementSpeed;
@@ -33,6 +36,8 @@ public class BasicEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_healthComponent.Run();
+
         // AI State Machine
         switch (m_currentState)
         {

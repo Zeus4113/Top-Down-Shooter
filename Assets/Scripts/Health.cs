@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
     [SerializeField] private bool m_acidResistance;
     [SerializeField] private bool m_electricalResistance;
 
-    private bool isIgnited;
+    private bool m_isIgnited;
     private GameObject myFire;
     private float m_currentHealth;
 
@@ -26,22 +26,6 @@ public class Health : MonoBehaviour
     public void Run()
     {
         IsAlive();
-        if (isIgnited)
-        {
-            Debug.Log("Ignited");
-            if(myFire != null)
-            {
-                myFire.transform.position = transform.position;
-                myFire.transform.rotation = Quaternion.identity;
-            }
-        }
-        else
-        {
-            if(myFire != null)
-            {
-                Destroy(myFire);
-            }
-        }
     }
 
     public void Heal(float health)
@@ -74,15 +58,22 @@ public class Health : MonoBehaviour
         if (m_currentHealth <= 0)
         {
             Destroy(gameObject);
-            if(myFire != null)
-            {
-                Destroy(myFire);
-            }
             return false;
         }
         return true;
     }
 
+    public void SetIgnited(bool isTrue)
+    {
+        m_isIgnited = isTrue;
+    }
+
+    public bool IsIgnited()
+    {
+        return m_isIgnited;
+    }
+
+    /*
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
@@ -95,6 +86,7 @@ public class Health : MonoBehaviour
             Damage(collision.gameObject.GetComponent<Rocket>().GetDamage());
         }
     }
+    
 
     // Ignited Functions
 
@@ -127,6 +119,7 @@ public class Health : MonoBehaviour
         isIgnited = false;
         yield return null;
     }
+    */
 
     // Health Pickup
 

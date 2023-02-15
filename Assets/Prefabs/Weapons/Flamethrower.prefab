@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2361622738521237386
 SpriteRenderer:
@@ -4910,5 +4910,6 @@ MonoBehaviour:
   currentAmmo: 100
   clipAmmo: 100
   reserveAmmo: 100
-  damage: 20
-  duration: 6
+  m_damage: 10
+  m_duration: 5
+  m_firePrefab: {fileID: 7723989353399453095, guid: b44064bb7e4f7ab46874fbd9f000ecf3, type: 3}
