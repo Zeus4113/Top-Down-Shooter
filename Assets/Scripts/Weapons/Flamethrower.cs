@@ -80,11 +80,12 @@ public class Flamethrower : MonoBehaviour, IShootable
         if (!targetHealth.IsIgnited())
         {           
             targetHealth.SetIgnited(true);
+
             GameObject myFire = Instantiate(m_firePrefab, transform.position, transform.rotation);
-            Debug.Log(myFire);
             myFire.transform.localScale = target.transform.localScale * 1.3f;
             myFire.transform.parent = target.transform;
             myFire.transform.position = target.transform.position;
+
             StartCoroutine(Ignited(tickDamage, duration, target, myFire));
         }
     }

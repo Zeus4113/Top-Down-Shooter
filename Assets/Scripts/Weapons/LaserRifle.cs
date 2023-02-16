@@ -21,7 +21,6 @@ public class LaserRifle : MonoBehaviour, IShootable
 
     public void Init()
     {
-        Debug.Log("Laser Rifle Init");
         canShoot = true;
         firePos = this.transform.Find("FirePos");
     }
@@ -38,15 +37,12 @@ public class LaserRifle : MonoBehaviour, IShootable
         if (Input.GetButtonDown("Fire") && canShoot)
         {
             Shoot();
-            canShoot = false;
         }
 
         if (Input.GetButtonDown("Reload"))
         {
-            if (reserveAmmo != 0)
-            {
-                Reload();
-            }
+            if (reserveAmmo == 0) return;
+            Reload();
         }
     }
 
@@ -54,27 +50,31 @@ public class LaserRifle : MonoBehaviour, IShootable
     {
         if (canShoot && currentAmmo > 0)
         {
+            canShoot = false;
+
             Debug.DrawLine(transform.position, (transform.up * range), Color.green, 0.25f);
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
+            if (hit.collider == null) return;
 
-            if(hit.collider != null)
+            GameObject myObject = hit.collider.gameObject;           
+            if(myObject.GetComponent<Health>() != null)
             {
-                if(hit.collider.gameObject.GetComponent<Health>() != null)
+                Health health = myObject.GetComponent<Health>();
+                switch (health.CheckResistance())
                 {
-                    if(hit.collider.gameObject.GetComponent<Sprinter>() != null)
-                    {
-                        hit.collider.gameObject.GetComponent<Sprinter>().SetState(state.supercharged);
-                    }
-                    else
-                    {
-                        hit.collider.gameObject.GetComponent<Health>().Damage(damage);
-                    }    
+                    case DamageType.lightning:
+                        health.Heal(damage);
+                        break;
+
+                    default:
+                        health.Damage(damage);
+                        break;
                 }
-            }
-            currentAmmo--;
+            }           
+        currentAmmo--;
         }
-        Invoke("ResetShot", fireRate);        
+    Invoke("ResetShot", fireRate);        
     }
 
     public void ResetShot()
@@ -83,23 +83,30 @@ public class LaserRifle : MonoBehaviour, IShootable
     }
     public void Reload()
     {
-
-        if (reserveAmmo > clipAmmo)
+        if (currentAmmo < clipAmmo)
         {
-            int tempAmmo;
-            tempAmmo = clipAmmo - currentAmmo;
-            reserveAmmo -= tempAmmo;
-            currentAmmo = clipAmmo;
-        }
-        else if (reserveAmmo < clipAmmo)
-        {
-            currentAmmo = reserveAmmo;
-            reserveAmmo = 0;
-        }
+            if (reserveAmmo > clipAmmo)
+            {
+                int usedAmmo = currentAmmo - clipAmmo;
+                reserveAmmo += usedAmmo;
+                currentAmmo = clipAmmo;
+            }
+            else if (reserveAmmo <= clipAmmo)
+            {
+                if (currentAmmo + reserveAmmo > clipAmmo)
+                {
+                    int leftOverAmmo = currentAmmo + reserveAmmo - clipAmmo;
+                    currentAmmo = clipAmmo;
+                    reserveAmmo = leftOverAmmo;
 
-        Debug.Log(currentAmmo);
-        Debug.Log(clipAmmo);
-        Debug.Log(reserveAmmo);
+                }
+                else if (currentAmmo + reserveAmmo <= clipAmmo)
+                {
+                    currentAmmo = reserveAmmo + currentAmmo;
+                    reserveAmmo = 0;
+                }
+            }
+        }
     }
     public int GetReserveAmmo()
     {

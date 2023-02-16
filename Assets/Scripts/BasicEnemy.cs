@@ -23,7 +23,7 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] private float m_attackCooldown;
 
     // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         m_healthComponent = gameObject.GetComponent<Health>();
         m_healthComponent.Init();
@@ -34,7 +34,7 @@ public class BasicEnemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Run()
     {
         m_healthComponent.Run();
 

@@ -8,54 +8,22 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private GameObject enemySprinter;
     [SerializeField] private GameObject enemyBruiser;
     [SerializeField] private GameObject[] enemies;
+    [SerializeField] private GameObject[] spawnPoints;
 
     public void Init()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            
-            if (enemies[i].gameObject.GetComponents<Shooter>().Length != 0)
-            {
-                Debug.Log(enemies[i].name);
-                enemies[i].gameObject.GetComponent<Shooter>().Init();
-            }
-            
-            if (enemies[i].gameObject.GetComponents<Sprinter>().Length != 0)
-            {
-                enemies[i].gameObject.GetComponent<Sprinter>().Init();
-            }
-
-            if (enemies[i].gameObject.GetComponents<Bruiser>().Length != 0)
-            {
-                enemies[i].gameObject.GetComponent<Bruiser>().Init();
-            }
-
-        }
+        spawnPoints = GameObject.FindGameObjectsWithTag("Spawner");
 
     }
 
     public void Run()
     {
-        for (int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < spawnPoints.Length; i++)
         {
-            if (enemies[i] != null) {
-                if (enemies[i].gameObject.GetComponents<Shooter>().Length != 0)
-                {
-                    enemies[i].gameObject.GetComponent<Shooter>().Run();
-                }
+            SpawnPoint mySpawnPoint = spawnPoints[i].GetComponent<SpawnPoint>();
 
-                if (enemies[i].gameObject.GetComponents<Sprinter>().Length != 0)
-                {
-                    enemies[i].gameObject.GetComponent<Sprinter>().Run();
-                }
-
-                if (enemies[i].gameObject.GetComponents<Bruiser>().Length != 0)
-                {
-                    enemies[i].gameObject.GetComponent<Bruiser>().Run();
-                }
-            }
+            mySpawnPoint.Run();
         }
 
     }

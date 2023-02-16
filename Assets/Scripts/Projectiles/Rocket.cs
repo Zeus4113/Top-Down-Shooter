@@ -26,26 +26,24 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Health>() != null)
+        if (collision == null) return;
+
+        GameObject myObject = collision.gameObject;
+        GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
+
+        if (myObject.GetComponent<Health>() != null)
         {
-            GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
-            collision.gameObject.GetComponent<Health>().Damage(damage);
+            Health health = myObject.GetComponent<Health>();
+            health.Damage(damage);
             Destroy();
         }
+
         if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
         {
-            GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(this.transform.up * force, ForceMode2D.Impulse);
+            Rigidbody2D rb = myObject.GetComponent<Rigidbody2D>();
+            rb.AddRelativeForce(this.transform.up * force, ForceMode2D.Impulse);
             Destroy();
         }
-
-        if (collision.gameObject.tag == "Environment")
-        {
-            GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
-            Destroy();
-        }
-        
-
     }
 
     private void MoveRocket()

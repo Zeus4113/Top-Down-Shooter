@@ -13,12 +13,15 @@ public class Health : MonoBehaviour
     private bool m_isIgnited;
     private GameObject myFire;
     private float m_currentHealth;
+    private ParticleSystem m_healParticle;
 
     public delegate void healthPickup();
     public static healthPickup myHealthPickup;
 
     public void Init()
     {
+        m_healParticle = GetComponentInChildren<ParticleSystem>();
+        m_healParticle.Stop();
         m_currentHealth = m_maxHealth;
         myHealthPickup = HealthPickup;
     }
@@ -30,6 +33,10 @@ public class Health : MonoBehaviour
 
     public void Heal(float health)
     {
+        if (!m_healParticle.isEmitting)
+        {
+            m_healParticle.Play();    
+        }
         m_currentHealth += health;
     }
 

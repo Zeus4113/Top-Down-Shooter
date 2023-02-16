@@ -16,14 +16,20 @@ public class Explosion : MonoBehaviour
     {
         if(collision != null)
         {
-            if (collision.gameObject.GetComponent<Health>() != null)
+            GameObject myObject = collision.gameObject;
+            if (myObject.GetComponent<Health>() != null)
             {
-                collision.GetComponent<Health>().Damage(damage);
-
-                if (collision.gameObject.GetComponents<Sprinter>().Length != 0)
+                Health health = myObject.GetComponent<Health>();
+                switch (health.CheckResistance())
                 {
-                    collision.GetComponent<Sprinter>().SetState(state.supercharged);
-                }     
+                    case DamageType.lightning:
+                        health.Heal(damage);
+                        break;
+
+                    default:
+                        health.Damage(damage);
+                        break;
+                }
             }
         }
     }
