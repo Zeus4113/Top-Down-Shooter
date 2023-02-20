@@ -14,23 +14,21 @@ public class Explosion : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision != null)
-        {
-            GameObject myObject = collision.gameObject;
-            if (myObject.GetComponent<Health>() != null)
-            {
-                Health health = myObject.GetComponent<Health>();
-                switch (health.CheckResistance())
-                {
-                    case DamageType.lightning:
-                        health.Heal(damage);
-                        break;
+        if (collision == null) return;
 
-                    default:
-                        health.Damage(damage);
-                        break;
-                }
-            }
+        GameObject myObject = collision.gameObject;
+        if (myObject.GetComponent<Health>() == null) return;
+
+        Health health = myObject.GetComponent<Health>();
+        switch (health.CheckResistance())
+        {
+            case DamageType.lightning:
+                health.Heal(damage);
+                break;
+
+            default:
+                health.Damage(damage);
+                break;                
         }
     }
 }

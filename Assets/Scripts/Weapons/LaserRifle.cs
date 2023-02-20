@@ -15,9 +15,11 @@ public class LaserRifle : MonoBehaviour, IShootable
     private bool canShoot;
     private RaycastHit hit;
 
+    /*
     public delegate void OnRaycastHit();
     public event OnRaycastHit HitSprinter;
     public event OnRaycastHit HitShooter;
+    */
 
     public void Init()
     {
@@ -54,24 +56,26 @@ public class LaserRifle : MonoBehaviour, IShootable
 
             Debug.DrawLine(transform.position, (transform.up * range), Color.green, 0.25f);
 
+            // Check Raycast has hit a collider
             RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
             if (hit.collider == null) return;
 
-            GameObject myObject = hit.collider.gameObject;           
-            if(myObject.GetComponent<Health>() != null)
-            {
-                Health health = myObject.GetComponent<Health>();
-                switch (health.CheckResistance())
-                {
-                    case DamageType.lightning:
-                        health.Heal(damage);
-                        break;
+            // Check if collider gameobject has health component
+            GameObject myObject = hit.collider.gameObject;
+            if (myObject.GetComponent<Health>() == null) return;
 
-                    default:
-                        health.Damage(damage);
-                        break;
-                }
-            }           
+            // Check resistances and deal damage accordingly
+            Health health = myObject.GetComponent<Health>();
+            switch (health.CheckResistance())
+            {
+                case DamageType.lightning:
+                    health.Heal(damage);
+                    break;
+
+                default:
+                    health.Damage(damage);
+                    break;
+            }              
         currentAmmo--;
         }
     Invoke("ResetShot", fireRate);        
@@ -85,12 +89,15 @@ public class LaserRifle : MonoBehaviour, IShootable
     {
         if (currentAmmo < clipAmmo)
         {
+            // If has more reserve ammo than clip ammo
             if (reserveAmmo > clipAmmo)
             {
                 int usedAmmo = currentAmmo - clipAmmo;
                 reserveAmmo += usedAmmo;
                 currentAmmo = clipAmmo;
             }
+
+            // If has less reserve ammo than clip ammo
             else if (reserveAmmo <= clipAmmo)
             {
                 if (currentAmmo + reserveAmmo > clipAmmo)

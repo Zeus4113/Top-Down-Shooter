@@ -11,7 +11,7 @@ public class SpawnPoint : MonoBehaviour
     [SerializeField] private float m_spawnDelay;
 
     private bool m_isSpawning;
-    private GameObject[] m_spawnedEnemies;
+    private BasicEnemy[] m_spawnedEnemies;
 
     public void Run()
     {
@@ -51,12 +51,11 @@ public class SpawnPoint : MonoBehaviour
     IEnumerator SpawnEnemies(int amount, GameObject[] enemyType)
     {
         m_isSpawning = true;
-        Debug.Log("Spawning");
 
         // Spawns enemies of given amount and type
         for (int i = 0; i < amount; i++)
         {
-            GameObject enemy = Instantiate(enemyType[Random.Range(0, enemyType.Length)], transform.position, transform.rotation);
+            GameObject enemy = Instantiate(enemyType[Random.Range(0, enemyType.Length - 1)], transform.position, transform.rotation);
             StoreEnemy(enemy);
             yield return new WaitForSeconds(1f);
         }
@@ -73,19 +72,21 @@ public class SpawnPoint : MonoBehaviour
 
     private void StoreEnemy(GameObject enemyObject)
     {
+        // Check if it is valid
         if(enemyObject == null) return;
-
         Debug.Log("Not Null");
-        if (enemyObject.GetComponent<BasicEnemy>() != null)
-        {
-            Debug.Log("Has Component");
 
-            // Store each enemy in an array / Error here due to invalid gameObject reference
-            m_spawnedEnemies[m_spawnedEnemies.Length] = enemyObject;
+        // Check if has component
+        if (enemyObject.GetComponent<BasicEnemy>() == null) return;
+        Debug.Log("Has Component");
 
-            BasicEnemy enemy = enemyObject.GetComponent<BasicEnemy>();
-            enemy.Init();
-            Debug.Log("Enemy: ", enemy);
-        }
+        // Initialise Enemy
+        BasicEnemy enemy = enemyObject.GetComponent<BasicEnemy>();
+        enemy.Init();
+        Debug.Log("Enemy: ", enemy);
+
+        // Store each enemy in an array / Error here due to invalid gameObject reference
+        m_spawnedEnemies[m_spawnedEnemies.Length - 1] = enemy;
+
     }
 }
