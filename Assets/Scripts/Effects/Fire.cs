@@ -52,7 +52,6 @@ public class Fire : MonoBehaviour
             {
                 case DamageType.fire:
 
-                    Debug.Log("Healing (Fire): " + targetHealth.GetHealth().ToString());
                     targetHealth.Heal(tickDamage);
 
                     break;

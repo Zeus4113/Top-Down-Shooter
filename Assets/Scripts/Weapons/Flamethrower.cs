@@ -14,16 +14,12 @@ public class Flamethrower : MonoBehaviour, IShootable
 
     private ParticleSystem mySystem;
     private Collider2D col;
-    private bool canShoot;
     private bool m_isFiring;
-    private bool m_isIgnited;
 
     public void Init()
     {
-        m_isIgnited = false;
         clipAmmo = 100;
         currentAmmo = clipAmmo;
-        canShoot = true;
         mySystem = GetComponent<ParticleSystem>();
         col = GetComponent<Collider2D>();      
     }
@@ -32,33 +28,6 @@ public class Flamethrower : MonoBehaviour, IShootable
     {
         WeaponInput();
     }
-
-
-    /*
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!canShoot)
-        {
-            if (collision.gameObject.CompareTag("Enemy"))
-            {
-                Debug.Log("EnemyHit");
-            }
-        }
-    }
-
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (!canShoot)
-        {
-            if (collision.gameObject.GetComponent<Health>() != null)
-            {
-                // collision.gameObject.GetComponent<Health>().Ignite(damage, duration);
-            }
-        }
-    }
-
-    */
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -79,8 +48,10 @@ public class Flamethrower : MonoBehaviour, IShootable
 
         if (!targetHealth.IsIgnited())
         {           
+            // Set is ignited
             targetHealth.SetIgnited(true);
 
+            // Instantiate and attach fire prefab
             GameObject myFire = Instantiate(m_firePrefab, transform.position, transform.rotation);
             myFire.transform.localScale = target.transform.localScale * 1.3f;
             myFire.transform.parent = target.transform;
@@ -96,18 +67,18 @@ public class Flamethrower : MonoBehaviour, IShootable
 
         for (int i = 0; i < duration; i++)
         {
+            // Check damage resistance of given enemy
             switch (targetHealth.CheckResistance())
             {
-                case DamageType.fire:
+               case DamageType.none:
 
-                    Debug.Log("Healing (Fire): " + targetHealth.GetHealth().ToString());
-                    targetHealth.Heal(tickDamage);
+                    targetHealth.Damage(tickDamage);
 
                     break;
 
-                default:
+                case DamageType.fire:
 
-                    targetHealth.Damage(tickDamage);
+                    targetHealth.Heal(tickDamage);
 
                     break;
             }
@@ -127,7 +98,6 @@ public class Flamethrower : MonoBehaviour, IShootable
     {
         if(currentAmmo > 0)
         {
-            canShoot = false;
             m_isFiring = true;
             mySystem.Play();
             StartCoroutine(DrainFuel());
@@ -136,7 +106,6 @@ public class Flamethrower : MonoBehaviour, IShootable
 
     public void ResetShot()
     {
-        canShoot = true;
         m_isFiring = false;
         mySystem.Stop();
         StopCoroutine(DrainFuel());

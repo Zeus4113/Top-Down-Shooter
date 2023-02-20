@@ -11,7 +11,13 @@ public class SpawnPoint : MonoBehaviour
     [SerializeField] private float m_spawnDelay;
 
     private bool m_isSpawning;
-    private BasicEnemy[] m_spawnedEnemies;
+    private List<GameObject> m_spawnedEnemies;
+
+    public void Init()
+    {
+        m_spawnedEnemies = new List<GameObject>();
+        m_isSpawning = false;
+    }
 
     public void Run()
     {
@@ -35,17 +41,12 @@ public class SpawnPoint : MonoBehaviour
             else if(m_spawnDelay == 0)
             {
                 StartCoroutine(SpawnEnemies(m_spawnCount, m_enemyTypes));
+                m_spawnDelay = 2.5f;
             }
         }
 
-        if (m_spawnedEnemies == null) return;
+        RunEnemies();
 
-        for(int i = 0; i < m_spawnedEnemies.Length; i++)
-        {
-            // Run the spawned enemies
-            BasicEnemy enemyScript = m_spawnedEnemies[i].GetComponent<BasicEnemy>();
-            enemyScript.Run();
-        }
     }
 
     IEnumerator SpawnEnemies(int amount, GameObject[] enemyType)
@@ -55,8 +56,12 @@ public class SpawnPoint : MonoBehaviour
         // Spawns enemies of given amount and type
         for (int i = 0; i < amount; i++)
         {
+            // Spawn enemy and store in array
             GameObject enemy = Instantiate(enemyType[Random.Range(0, enemyType.Length - 1)], transform.position, transform.rotation);
-            StoreEnemy(enemy);
+            m_spawnedEnemies.Add(enemy);
+            InitEnemies(enemy);
+
+            //StoreEnemy(enemy);
             yield return new WaitForSeconds(1f);
         }
 
@@ -70,10 +75,35 @@ public class SpawnPoint : MonoBehaviour
         m_isActive = isTrue;
     }
 
+    private void InitEnemies(GameObject myEnemy)
+    {
+        BasicEnemy basicEnemy = myEnemy.GetComponent<BasicEnemy>();
+        basicEnemy.Init();
+    }
+
+    private void RunEnemies()
+    {
+        if (m_spawnedEnemies == null) return;
+
+        for (int i = 0; i < m_spawnedEnemies.Count; i++)
+        {
+            // Run the spawned enemies
+
+            if(m_spawnedEnemies[i] != null)
+            {
+                m_spawnedEnemies[i].GetComponent<BasicEnemy>().Run();
+            }
+            else if (m_spawnedEnemies[i] == null)
+            {
+                m_spawnedEnemies.Remove(m_spawnedEnemies[i]);
+            }
+        }
+    }
+
     private void StoreEnemy(GameObject enemyObject)
     {
         // Check if it is valid
-        if(enemyObject == null) return;
+        if (enemyObject == null) return;
         Debug.Log("Not Null");
 
         // Check if has component
@@ -86,7 +116,7 @@ public class SpawnPoint : MonoBehaviour
         Debug.Log("Enemy: ", enemy);
 
         // Store each enemy in an array / Error here due to invalid gameObject reference
-        m_spawnedEnemies[m_spawnedEnemies.Length - 1] = enemy;
+        //m_spawnedEnemies[m_spawnedEnemies.Length - 1] = enemy;
 
     }
 }

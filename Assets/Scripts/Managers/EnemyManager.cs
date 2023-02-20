@@ -14,6 +14,13 @@ public class EnemyManager : MonoBehaviour
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawner");
+
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            SpawnPoint mySpawnPoint = spawnPoints[i].GetComponent<SpawnPoint>();
+
+            mySpawnPoint.Init();
+        }
     }
 
     public void Run()

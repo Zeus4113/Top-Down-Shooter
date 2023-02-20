@@ -146,6 +146,7 @@ public class Health : MonoBehaviour
     {
         if (m_fireResistance)
         {
+            Debug.Log("Is Fire Resistant");
             return DamageType.fire;
         }
         else if (m_acidResistance)
@@ -157,13 +158,14 @@ public class Health : MonoBehaviour
             return DamageType.lightning;
         }
 
-        return 0;
+        return DamageType.none;
     }
 
 }
 
 public enum DamageType
 {
+    none,
     fire,
     acid,
     lightning
