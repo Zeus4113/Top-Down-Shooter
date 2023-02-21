@@ -4,32 +4,28 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyShooter;
-    [SerializeField] private GameObject enemySprinter;
-    [SerializeField] private GameObject enemyBruiser;
-    [SerializeField] private GameObject[] enemies;
-    [SerializeField] private GameObject[] spawnPoints;
+    [SerializeField] private GameObject[] m_levelAreas;
 
     public void Init()
     {
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        spawnPoints = GameObject.FindGameObjectsWithTag("Spawner");
-
-        for (int i = 0; i < spawnPoints.Length; i++)
+        for (int i = 0; i < m_levelAreas.Length; i++)
         {
-            SpawnPoint mySpawnPoint = spawnPoints[i].GetComponent<SpawnPoint>();
+            LevelArea myLevelArea = m_levelAreas[i].GetComponent<LevelArea>();
 
-            mySpawnPoint.Init();
+            myLevelArea.Init();
         }
     }
 
     public void Run()
     {
-        for (int i = 0; i < spawnPoints.Length; i++)
-        {
-            SpawnPoint mySpawnPoint = spawnPoints[i].GetComponent<SpawnPoint>();
 
-            mySpawnPoint.Run();
+        if (m_levelAreas.Length == 0) return;
+
+        for (int i = 0; i < m_levelAreas.Length; i++)
+        {
+            LevelArea myLevelArea = m_levelAreas[i].GetComponent<LevelArea>();
+
+            myLevelArea.Run();
         }
     }
 }

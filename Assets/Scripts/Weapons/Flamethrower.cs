@@ -29,17 +29,39 @@ public class Flamethrower : MonoBehaviour, IShootable
         WeaponInput();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (m_isFiring)
         {
-            if (collision.gameObject.GetComponent<Health>() != null)
-            {
-                // collision.gameObject.GetComponent<Health>().Ignite(m_damage, m_duration);
+            Debug.Log("Collider Hit");
+            GameObject myObject = collision.gameObject;
 
-                Ignite(m_damage, m_duration, collision.gameObject);
+            if(myObject.GetComponent<Health>() != null)
+            {
+                Ignite(m_damage, m_duration, myObject);
             }
-        }       
+
+            // Collision Not Working
+            if(myObject.GetComponent<Heater>() != null)
+            {
+                Debug.Log("Heater Hit");
+                Heater myHeater = myObject.GetComponent<Heater>();
+                myHeater.SetHeated(true);
+            }
+        }      
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision == null) return;
+
+        GameObject myObject = collision.gameObject;
+
+        if(myObject.GetComponent<Heater>() != null)
+        {
+            Heater myHeater = myObject.GetComponent<Heater>();
+            myHeater.SetHeated(false);
+        }
     }
 
     public void Ignite(float tickDamage, float duration, GameObject target)
@@ -86,8 +108,8 @@ public class Flamethrower : MonoBehaviour, IShootable
             yield return new WaitForSeconds(0.35f);
         }
 
-        Destroy(myFire);
         targetHealth.SetIgnited(false);
+        Destroy(myFire);
         yield return null;
 
     }

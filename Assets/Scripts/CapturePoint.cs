@@ -4,29 +4,37 @@ using UnityEngine;
 
 public class CapturePoint : MonoBehaviour
 {
-    [SerializeField] private Color completedColour;
-    [SerializeField] private GameObject[] ammoTypes; 
+    [SerializeField] private Color m_completedColour;
+    [SerializeField] private GameObject[] m_ammoTypes; 
+    [SerializeField] private GameObject[] m_interactables;
 
-    private bool playerPresent;
-    private bool isComplete;
-    private float currentCount;
-    private float maxCount;
-    private SpriteRenderer spriteRenderer;
+    private bool m_playerPresent;
+    private bool m_isComplete;
+    private float m_currentCount;
+    private float m_maxCount;
+    private SpriteRenderer m_spriteRenderer;
 
-    private void Start()
+    public void Init()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        playerPresent = false;
-        isComplete = false;
-        currentCount = 0;
-        maxCount = 15;
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        m_playerPresent = false;
+        m_isComplete = false;
+        m_currentCount = 0;
+        m_maxCount = 15;
+
+        if (m_interactables.Length == 0) return;
+
+        for (int i = 0; i < m_interactables.Length; i++)
+        {
+            m_interactables[i].GetComponent<IInteractable>().Init();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerPresent = true;
+            m_playerPresent = true;
             Debug.Log("Player Detected");
             StartCoroutine(CountUp());
         }
@@ -36,7 +44,7 @@ public class CapturePoint : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerPresent = false;
+            m_playerPresent = false;
             Debug.Log("Player Lost");
             StartCoroutine(CountDown());
         }
@@ -44,18 +52,18 @@ public class CapturePoint : MonoBehaviour
 
     IEnumerator CountUp()
     {
-        while (playerPresent && !isComplete)
+        while (m_playerPresent && !m_isComplete)
         {
-            if(currentCount < maxCount)
+            if(m_currentCount < m_maxCount)
             {
-                currentCount++;
-                Debug.Log(currentCount);
+                m_currentCount++;
+                Debug.Log(m_currentCount);
                 yield return new WaitForSeconds(1f);
             }
-            else if(currentCount >= maxCount)
+            else if(m_currentCount >= m_maxCount)
             {
-                currentCount = maxCount;
-                Debug.Log(currentCount);
+                m_currentCount = m_maxCount;
+                Debug.Log(m_currentCount);
                 OnComplete();
                 break;
             }
@@ -67,12 +75,12 @@ public class CapturePoint : MonoBehaviour
 
     IEnumerator CountDown()
     {
-        while (!playerPresent && !isComplete)
+        while (!m_playerPresent && !m_isComplete)
         {
-            if (currentCount > 0)
+            if (m_currentCount > 0)
             {
-                currentCount--;
-                Debug.Log(currentCount);
+                m_currentCount--;
+                Debug.Log(m_currentCount);
                 yield return new WaitForSeconds(1f);
             }
             else
@@ -86,18 +94,29 @@ public class CapturePoint : MonoBehaviour
 
     private void OnComplete()
     {
-        isComplete = true;
+        m_isComplete = true;
         Debug.Log("Completed!");
-        spriteRenderer.color = completedColour;
+        m_spriteRenderer.color = m_completedColour;
         SpawnAmmo();
+        Interact();
     }
 
     private void SpawnAmmo()
     {
         for(int i = 0; i < Random.Range(3f, 4f); i++)
         {
-            GameObject myAmmo = Instantiate(ammoTypes[Random.Range(0, ammoTypes.Length)], this.transform.position, this.transform.rotation);
+            GameObject myAmmo = Instantiate(m_ammoTypes[Random.Range(0, m_ammoTypes.Length)], this.transform.position, this.transform.rotation);
             myAmmo.GetComponent<Rigidbody2D>().AddForce(new Vector3(Random.Range(-5, 5), Random.Range(-5, 5)), ForceMode2D.Impulse);
+        }
+    }
+
+    private void Interact()
+    {
+        if(m_interactables.Length == 0) return;
+
+        for (int i = 0; i < m_interactables.Length; i++)
+        {
+            m_interactables[i].GetComponent<IInteractable>().Activate();
         }
     }
 }
