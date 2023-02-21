@@ -29,11 +29,10 @@ public class Flamethrower : MonoBehaviour, IShootable
         WeaponInput();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (m_isFiring)
         {
-            Debug.Log("Collider Hit");
             GameObject myObject = collision.gameObject;
 
             if(myObject.GetComponent<Health>() != null)
@@ -41,14 +40,31 @@ public class Flamethrower : MonoBehaviour, IShootable
                 Ignite(m_damage, m_duration, myObject);
             }
 
-            // Collision Not Working
             if(myObject.GetComponent<Heater>() != null)
             {
-                Debug.Log("Heater Hit");
                 Heater myHeater = myObject.GetComponent<Heater>();
-                myHeater.SetHeated(true);
+
+                if (!myHeater.IsHeated())
+                {
+                    myHeater.SetHeated(true);
+                    myHeater.StartRoutine();
+                }
             }
-        }      
+        }
+        else if (!m_isFiring)
+        {
+            GameObject myObject = collision.gameObject;
+
+            if (myObject.GetComponent<Heater>() != null)
+            {
+                Heater myHeater = myObject.GetComponent<Heater>();
+
+                if (myHeater.IsHeated())
+                {
+                    myHeater.SetHeated(false);
+                }
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -59,8 +75,13 @@ public class Flamethrower : MonoBehaviour, IShootable
 
         if(myObject.GetComponent<Heater>() != null)
         {
+            Debug.Log("Heater Stopping");
             Heater myHeater = myObject.GetComponent<Heater>();
-            myHeater.SetHeated(false);
+
+            if (myHeater.IsHeated())
+            {
+                myHeater.SetHeated(false);
+            }
         }
     }
 

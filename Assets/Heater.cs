@@ -9,16 +9,25 @@ public class Heater : MonoBehaviour
     [SerializeField] private float m_heatRequired;
     [SerializeField] private int m_heatDuration;
     [SerializeField] private float m_heatTick;
+    [SerializeField] private Gradient m_gradient;
 
     private bool m_isHeated;
+    [SerializeField] private SpriteRenderer m_spriteRenderer;
+
+    public void Init()
+    {
+       // m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        m_isHeated = false;
+        m_spriteRenderer.color = m_gradient.Evaluate(0f);
+    }
 
     private IEnumerator HeatUp(int duration)
     {
         for(int i = 0; i < duration; i++)
         {
             m_heatAmount += m_heatTick;
-            Debug.Log("heating!");
-
+            m_spriteRenderer.color = m_gradient.Evaluate(m_heatAmount / 10);
+            Debug.Log(m_heatAmount);
             if(m_heatAmount >= m_heatRequired)
             {
                 Interact();
@@ -26,7 +35,7 @@ public class Heater : MonoBehaviour
 
             if (!m_isHeated) break;
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.4f);
         }
 
         yield return null;
@@ -42,13 +51,19 @@ public class Heater : MonoBehaviour
 
     }
 
+    public void StartRoutine()
+    {
+        StartCoroutine(HeatUp(m_heatDuration));
+    }
+
     public void SetHeated(bool isTrue)
     {
         m_isHeated = isTrue;
 
-        if (m_isHeated)
-        {
-            StartCoroutine(HeatUp(m_heatDuration));
-        }
+    }
+
+    public bool IsHeated()
+    {
+        return m_isHeated;
     }
 }

@@ -6,6 +6,7 @@ public class LevelArea : MonoBehaviour
 {
     [SerializeField] private List<GameObject> m_spawnPoints;
     [SerializeField] private List<GameObject> m_capturePoints;
+    [SerializeField] private List<GameObject> m_heaters;
 
     private bool m_isPresent;
 
@@ -23,6 +24,12 @@ public class LevelArea : MonoBehaviour
         {
             CapturePoint capturePoint = m_capturePoints[i].GetComponent<CapturePoint>();
             capturePoint.Init();
+        }
+
+        for (int i = 0; i < m_heaters.Count; i++)
+        {
+            Heater heater = m_heaters[i].GetComponent<Heater>();
+            heater.Init();
         }
 
     }
