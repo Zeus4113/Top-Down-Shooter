@@ -8,31 +8,22 @@ public class LevelArea : MonoBehaviour
     [SerializeField] private List<GameObject> m_capturePoints;
     [SerializeField] private List<GameObject> m_heaters;
 
+    private List<SpawnPoint> m_mySpawnPoint;
+    private List<CapturePoint> m_myCapturePoint;
+    private List<Heater> m_myHeater;
+
     private bool m_isPresent;
 
    public void Init()
     {
         m_isPresent = false;
+        m_mySpawnPoint = new List<SpawnPoint>();
+        m_myCapturePoint = new List<CapturePoint>();
+        m_myHeater = new List<Heater>();
 
-        for (int i = 0; i < m_spawnPoints.Count; i++)
-        {
-            SpawnPoint spawnPoint = m_spawnPoints[i].GetComponent<SpawnPoint>();
-            spawnPoint.Init();
-        }
+        CacheVariables();
 
-        for (int i = 0; i < m_capturePoints.Count; i++)
-        {
-            CapturePoint capturePoint = m_capturePoints[i].GetComponent<CapturePoint>();
-            capturePoint.Init();
-        }
-
-        for (int i = 0; i < m_heaters.Count; i++)
-        {
-            Heater heater = m_heaters[i].GetComponent<Heater>();
-            heater.Init();
-        }
-
-    }
+   }
 
     public void Run()
     {
@@ -40,9 +31,29 @@ public class LevelArea : MonoBehaviour
         {
             for(int i = 0; i < m_spawnPoints.Count; i++)
             {
-                SpawnPoint spawnPoint = m_spawnPoints[i].GetComponent<SpawnPoint>();
-                spawnPoint.Run();
+                m_mySpawnPoint[i].Run();
             }
+        }
+    }
+
+    private void CacheVariables()
+    {
+        for (int i = 0; i < m_spawnPoints.Count; i++)
+        {
+            m_mySpawnPoint.Add(m_spawnPoints[i].GetComponent<SpawnPoint>());
+            m_mySpawnPoint[i].Init();
+        }
+
+        for (int i = 0; i < m_capturePoints.Count; i++)
+        {
+            m_myCapturePoint.Add(m_capturePoints[i].GetComponent<CapturePoint>());
+            m_myCapturePoint[i].Init();
+        }
+
+        for (int i = 0; i < m_heaters.Count; i++)
+        {
+            m_myHeater.Add(m_heaters[i].GetComponent<Heater>());
+            m_myHeater[i].Init();
         }
     }
 

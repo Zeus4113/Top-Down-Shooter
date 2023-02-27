@@ -9,7 +9,7 @@ public class Flamethrower : MonoBehaviour, IShootable
     [SerializeField] private int reserveAmmo;
     [SerializeField] private float m_damage;
     [SerializeField] private float m_duration;
-    [SerializeField] private GameObject m_firePrefab;
+    [SerializeField] private GameObject m_firePrefab; 
 
 
     private ParticleSystem mySystem;
@@ -47,7 +47,7 @@ public class Flamethrower : MonoBehaviour, IShootable
                 if (!myHeater.IsHeated())
                 {
                     myHeater.SetHeated(true);
-                    myHeater.StartRoutine();
+                    myHeater.StartHeatRoutine();
                 }
             }
         }
@@ -61,7 +61,10 @@ public class Flamethrower : MonoBehaviour, IShootable
 
                 if (myHeater.IsHeated())
                 {
+                    Debug.Log("IsHeated == False");
                     myHeater.SetHeated(false);
+                    myHeater.StartCoolRoutine();
+
                 }
             }
         }
@@ -75,12 +78,13 @@ public class Flamethrower : MonoBehaviour, IShootable
 
         if(myObject.GetComponent<Heater>() != null)
         {
-            Debug.Log("Heater Stopping");
             Heater myHeater = myObject.GetComponent<Heater>();
 
             if (myHeater.IsHeated())
             {
+                Debug.Log("IsHeated == False");
                 myHeater.SetHeated(false);
+                myHeater.StartCoolRoutine();
             }
         }
     }

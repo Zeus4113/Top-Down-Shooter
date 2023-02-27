@@ -80,7 +80,6 @@ public class CapturePoint : MonoBehaviour
             if (m_currentCount > 0)
             {
                 m_currentCount--;
-                Debug.Log(m_currentCount);
                 yield return new WaitForSeconds(1f);
             }
             else
@@ -95,7 +94,6 @@ public class CapturePoint : MonoBehaviour
     private void OnComplete()
     {
         m_isComplete = true;
-        Debug.Log("Completed!");
         m_spriteRenderer.color = m_completedColour;
         SpawnAmmo();
         Interact();
