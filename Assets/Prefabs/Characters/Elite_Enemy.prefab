@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &231108306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 231108307}
+  m_Layer: 0
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &231108307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231108306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4388166479938440691}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4388166478102955824
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4388166478102955827}
   - component: {fileID: 4388166478102955837}
-  - component: {fileID: 4388166478102955826}
+  - component: {fileID: 1983810089}
   m_Layer: 0
   m_Name: DetectionTrigger
   m_TagString: Untagged
@@ -43,13 +74,13 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 10
---- !u!114 &4388166478102955826
+--- !u!114 &1983810089
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,10 +89,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4388166478102955824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e99371f97f5c3343bb6afa36c399ee2, type: 3}
+  m_Script: {fileID: 11500000, guid: fcf6c99196e7b974589867e30f310780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDetected: 0
 --- !u!1 &4388166479938440695
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +125,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 231108307}
   - {fileID: 4388166478102955827}
   - {fileID: 8648200090244177655}
   m_Father: {fileID: 0}
@@ -202,10 +233,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attackDamage: 10
-  m_attackCooldown: 0
-  m_movementSpeed: 3.5
-  m_chaseSpeedMultiplier: 2
-  m_shootAttackRange: 6
+  m_attackCooldown: 1.5
+  m_movementSpeed: 3
+  m_chaseSpeedMultiplier: 1.25
+  m_shootAttackRange: 5
   m_meleeAttackRange: 2.5
   m_myBullet: {fileID: 930904475293420610, guid: d3ef51997286bb7438a4dfd319e407c6, type: 3}
 --- !u!114 &4388166479938440690

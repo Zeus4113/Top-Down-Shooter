@@ -65,7 +65,7 @@ public class EliteEnemy : MonoBehaviour, INavigable
             // Chases the player and attacks when in range
             case state.chasing:
 
-                if (Vector3.Distance(transform.position, GetPlayerPosition(m_playerRef)) > m_meleeAttackRange && m_attackReset)
+                if (Vector3.Distance(transform.position, GetPlayerPosition(m_playerRef)) > m_meleeAttackRange)
                 {
                     m_movementSpeed = m_defaultSpeed * m_chaseSpeedMultiplier;
                     MoveToPosition(transform.position, GetPlayerPosition(m_playerRef));
@@ -110,6 +110,7 @@ public class EliteEnemy : MonoBehaviour, INavigable
 
         FaceEnemy(myTarget);
         GameObject myProjectile = Instantiate(m_myBullet, m_firePos.position, Quaternion.identity);
+        Debug.Log("Spawned:", myProjectile); 
         myProjectile.GetComponent<Bullet>().Init();
 
         m_attackReset = false;

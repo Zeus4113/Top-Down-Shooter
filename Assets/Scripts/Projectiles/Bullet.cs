@@ -4,49 +4,48 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float damage;
-    [SerializeField] private float speed;
-    [SerializeField] private float bulletTime;
-    [SerializeField] private float force;
+    [SerializeField] private float m_damage;
+    [SerializeField] private float m_speed;
+    [SerializeField] private float m_bulletTime;
+    [SerializeField] private float m_force;
 
-    private Collider2D myCollider;
-    private Vector3 direction;
+    private Vector3 m_direction;
+    private float m_currentTime;
 
     public void Init()
     {
-        myCollider = GetComponent<Collider2D>();
         StartCoroutine(MoveObject());
+        m_currentTime = 0f;
     }
 
     private IEnumerator MoveObject()
     {
-        Invoke("Destroy", bulletTime);
+        do {
 
-        while (this.isActiveAndEnabled)
-        {
-            transform.Translate(direction * speed * Time.deltaTime);     
-        }
+            Debug.Log("Moving", gameObject);
+            transform.Translate(m_direction * m_speed * Time.deltaTime);
+            yield return new WaitForSeconds(1f);
+            m_currentTime++;
+
+        } while (m_currentTime < m_bulletTime);
 
         yield return null;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.layer == 2) return;
+
         if (collision.gameObject.GetComponent<Health>() != null)
         {
-            collision.gameObject.GetComponent<Health>().Damage(damage);
+            collision.gameObject.GetComponent<Health>().Damage(m_damage);
         }
-        Destroy();
+
+        Destroy(gameObject);
     }
 
     public void SetDirection(Vector3 direction)
     {
-        this.direction = direction.normalized;
+        this.m_direction = direction.normalized;
     }
-
-    private void Destroy()
-    {
-        Destroy(this.gameObject);
-    }
-
 }
