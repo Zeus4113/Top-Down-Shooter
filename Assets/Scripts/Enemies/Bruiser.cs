@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bruiser : MonoBehaviour, INavigable
+public class Bruiser : MonoBehaviour
 {
     [SerializeField] private float currentSpeed;
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sprinter : MonoBehaviour, INavigable, IEffectable
+public class Sprinter : MonoBehaviour, IEffectable
 {
     [SerializeField] private float currentSpeed;
     [SerializeField] private float attackDamage;

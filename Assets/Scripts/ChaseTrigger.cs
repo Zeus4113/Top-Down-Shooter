@@ -29,11 +29,11 @@ public class ChaseTrigger : MonoBehaviour
 
     void UpdateState(state newState)
     {
-        GetComponentInParent<BasicEnemy>().SetState(newState);
+        GetComponentInParent<INavigable>().SetState(newState);
     }
 
     void UpdatePlayerRef(GameObject newPlayerRef)
     {
-        GetComponentInParent<BasicEnemy>().SetPlayerRef(newPlayerRef);
+        GetComponentInParent<INavigable>().SetPlayerRef(newPlayerRef);
     }
 }
