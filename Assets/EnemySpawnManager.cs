@@ -41,7 +41,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     private GameObject AddSpawnPoint()
     {
-        Vector3 spawnArea = Random.insideUnitCircle * 5;
+        Vector3 spawnArea = Random.insideUnitCircle * 2.5f;
         Transform spawnPosition = m_spawnPointTransforms[Random.Range(0, m_spawnPointTransforms.Count)];
 
         GameObject newSpawnPoint = Instantiate(m_spawnPoint, (spawnArea + spawnPosition.position), spawnPosition.rotation);

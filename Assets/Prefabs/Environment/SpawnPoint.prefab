@@ -187,5 +187,5 @@ MonoBehaviour:
   m_isActive: 1
   m_spawnCount: 1
   m_spawnTime: 1
-  m_spawnDelay: 2.5
+  m_spawnDelay: 3
   m_waveAmount: 2
