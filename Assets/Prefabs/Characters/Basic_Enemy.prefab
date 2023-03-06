@@ -4850,7 +4850,7 @@ Transform:
   - {fileID: 649035902306307398}
   - {fileID: 1127315187}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &649035901613697746
 SpriteRenderer:
@@ -4892,7 +4892,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 4983d107e874e6342a0ece128438b4d0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5024,7 +5024,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 25
 --- !u!114 &649035902306307399
 MonoBehaviour:
   m_ObjectHideFlags: 0

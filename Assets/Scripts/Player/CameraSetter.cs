@@ -15,6 +15,6 @@ public class CameraSetter : MonoBehaviour
 
     public void Run()
     {
-        gameObject.transform.position = player.transform.position + new Vector3(0f, 0f, -distance);
+        //gameObject.transform.position = player.transform.position + new Vector3(0f, 0f, -distance);
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public interface INavigable
 {
+
+    public void Run();
     public Vector3 FindNewPatrolPosition();
     public void MoveToPosition(Vector3 pos1, Vector3 pos2);
     public void SetState(state myState);

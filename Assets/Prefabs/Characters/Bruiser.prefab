@@ -140,7 +140,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 4983d107e874e6342a0ece128438b4d0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -201,7 +201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46c64813aa6ee744a2364d6f191d14d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
   currentSpeed: 3
 --- !u!114 &7746082079941740662
 MonoBehaviour:
@@ -215,10 +214,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 728d6e1005b4bb042982a445e2faf27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
-  firePrefab: {fileID: 7723989353399453095, guid: b44064bb7e4f7ab46874fbd9f000ecf3, type: 3}
-  isBruiser: 1
+  m_maxHealth: 0
+  m_firePrefab: {fileID: 0}
+  m_fireResistance: 0
+  m_acidResistance: 0
+  m_electricalResistance: 0
 --- !u!1 &6928110834516692371
 GameObject:
   m_ObjectHideFlags: 0

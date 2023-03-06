@@ -9,19 +9,25 @@ public class SpawnPoint : MonoBehaviour, IInteractable
     [SerializeField] private int m_spawnCount;
     [SerializeField] private float m_spawnTime;
     [SerializeField] private float m_spawnDelay;
+    [SerializeField] private int m_waveAmount;
 
     private bool m_isSpawning;
-    private List<BasicEnemy> m_spawnedEnemies;
+    private int m_currentWave;
+
+    public delegate void SpawnPointDelegate(INavigable enemy);
+    public static SpawnPointDelegate newEnemy;
+
+    public delegate void SpawnPointRemoved(SpawnPoint spawn);
+    public static SpawnPointRemoved removeSpawn;
 
     public void Init()
-    {
-        m_spawnedEnemies = new List<BasicEnemy>();
+    {       
         m_isSpawning = false;
+        m_currentWave = 0;
     }
 
     public void Run()
     {
-        RunEnemies();
 
         // If not active do not spawn
         if (!m_isActive) return;
@@ -58,11 +64,21 @@ public class SpawnPoint : MonoBehaviour, IInteractable
             // Spawn enemy and store in array
             GameObject enemy = Instantiate(enemyType[Random.Range(0, enemyType.Length - 1)], transform.position, transform.rotation);
             BasicEnemy basicEnemy = enemy.GetComponent<BasicEnemy>();
-            m_spawnedEnemies.Add(basicEnemy);
-            InitEnemies(basicEnemy);
+            INavigable enemyBase = enemy.GetComponent<INavigable>();
+
+            basicEnemy.Init();
+            newEnemy.Invoke(enemyBase);
 
             //StoreEnemy(enemy);
             yield return new WaitForSeconds(1f);
+        }
+
+        m_currentWave++;
+
+        if(m_currentWave >= m_waveAmount)
+        {
+            removeSpawn.Invoke(this.GetComponent<SpawnPoint>());
+            Destroy(this.gameObject);
         }
 
         m_isSpawning = false;
@@ -78,29 +94,5 @@ public class SpawnPoint : MonoBehaviour, IInteractable
     public void Activate()
     {
         m_isActive = false;
-    }
-
-    private void InitEnemies(BasicEnemy myEnemy)
-    {
-        myEnemy.Init();
-    }
-
-    private void RunEnemies()
-    {
-        if (m_spawnedEnemies == null) return;
-
-        for (int i = 0; i < m_spawnedEnemies.Count; i++)
-        {
-            // Run the spawned enemies
-
-            if(m_spawnedEnemies[i] != null)
-            {
-                m_spawnedEnemies[i].Run();
-            }
-            else if (m_spawnedEnemies[i] == null)
-            {
-                m_spawnedEnemies.Remove(m_spawnedEnemies[i]);
-            }
-        }
     }
 }

@@ -18,6 +18,9 @@ public class Health : MonoBehaviour
     public delegate void healthPickup();
     public static healthPickup myHealthPickup;
 
+    public delegate void isDead(GameObject deadObject);
+    public static isDead myIsDead;
+
     public void Init()
     {
         m_healParticle = GetComponentInChildren<ParticleSystem>();
@@ -64,6 +67,7 @@ public class Health : MonoBehaviour
     {
         if (m_currentHealth <= 0)
         {
+            myIsDead.Invoke(this.gameObject);
             Destroy(gameObject);
             return false;
         }

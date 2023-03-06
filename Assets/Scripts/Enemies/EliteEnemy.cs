@@ -37,6 +37,11 @@ public class EliteEnemy : MonoBehaviour, INavigable
         m_defaultSpeed = m_movementSpeed;
         m_attackReset = true;
     }
+
+    public void Run()
+    {
+
+    }
     
     public void Update()
     {
