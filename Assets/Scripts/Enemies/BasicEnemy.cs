@@ -63,13 +63,13 @@ public class BasicEnemy : MonoBehaviour, INavigable
 
                 if(Vector3.Distance(transform.position, GetPlayerPosition(m_playerRef)) > m_attackRange && m_attackReset)
                 {
-                    m_movementSpeed = m_defaultSpeed * m_chaseSpeedMultiplier;
+                    //m_movementSpeed = m_defaultSpeed * m_chaseSpeedMultiplier;
                     MoveToPosition(transform.position, GetPlayerPosition(m_playerRef));
                 }
 
                 if(Vector3.Distance(transform.position, GetPlayerPosition(m_playerRef)) < m_attackRange && m_attackReset)
                 {
-                    m_movementSpeed = m_defaultSpeed / m_chaseSpeedMultiplier;
+                    //m_movementSpeed = m_defaultSpeed / m_chaseSpeedMultiplier;
                     Attack(m_playerRef);
                 }
 
@@ -145,5 +145,10 @@ public class BasicEnemy : MonoBehaviour, INavigable
         Vector3 playerPosition = player.transform.position;
         Vector2 direction = new Vector2(playerPosition.x - transform.position.x, playerPosition.y - transform.position.y);
         transform.up = direction;
+    }
+
+    public void SetSpeedMultiplier(float newSpeedMultiplier)
+    {
+        m_movementSpeed = m_defaultSpeed * newSpeedMultiplier;
     }
 }

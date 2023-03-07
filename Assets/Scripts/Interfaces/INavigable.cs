@@ -11,6 +11,8 @@ public interface INavigable
     public void SetState(state myState);
     public void SetPlayerRef(GameObject player);
     public state GetState();
+
+    public void SetSpeedMultiplier(float newSpeedMultiplier);
 }
 
 public enum state

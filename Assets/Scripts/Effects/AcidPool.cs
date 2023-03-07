@@ -17,18 +17,7 @@ public class AcidPool : MonoBehaviour
         if(collision.gameObject != null)
         {        
             StartCoroutine(Damage(collision.gameObject));
-
-            if (collision.gameObject.CompareTag("Enemy"))
-            {
-                if (collision.gameObject.GetComponents<Bruiser>().Length != 0)
-                {                   
-                    collision.GetComponent<Bruiser>().SetSlowed();
-                }
-                if (collision.gameObject.GetComponents<Sprinter>().Length != 0)
-                {
-                    collision.GetComponent<Sprinter>().SetSlowed();
-                }
-            }
+            StartCoroutine(SlowedSpeed(collision.gameObject));
         }
     }
 
@@ -36,30 +25,39 @@ public class AcidPool : MonoBehaviour
     {
         for(int i = 0; i < duration; i++)
         {
-            if(myObject != null)
+            if (myObject == null) yield return null;
+
+            if (myObject.GetComponent<Health>() == null) yield return null;
+
+            float health = myObject.GetComponent<Health>().GetHealth();
+
+            switch (myObject.GetComponent<Health>().CheckResistance())
             {
-                if (myObject.GetComponent<Health>() != null)
-                {
-                    float health = myObject.GetComponent<Health>().GetHealth();
+                case DamageType.none:
+                    myObject.GetComponent<Health>().Damage(damage);
+                    break;
 
-                    switch (myObject.GetComponent<Health>().CheckResistance())
-                    {
-                        case DamageType.acid:
-
-                            Debug.Log("Healing (Acid): " + health);
-                            myObject.GetComponent<Health>().Heal(damage);
-                            break;
-
-                        default:
-                            Debug.Log("Damaging (Acid): " + health);
-                            myObject.GetComponent<Health>().Damage(damage);
-                            break;
-
-                    }
-                }
+                case DamageType.acid:
+                    myObject.GetComponent<Health>().Heal(damage);
+                    break;
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1f);
         }
+        yield return null;
+    }
+
+    private IEnumerator SlowedSpeed(GameObject myObject)
+    {
+        if (myObject == null) yield return null;
+
+        if (myObject.GetComponent<INavigable>() == null) yield return null;
+            
+        myObject.GetComponent<INavigable>().SetSpeedMultiplier(0.3f);
+
+        yield return new WaitForSeconds(3f);
+
+        myObject.GetComponent<INavigable>().SetSpeedMultiplier(1f);
+
         yield return null;
     }
 }

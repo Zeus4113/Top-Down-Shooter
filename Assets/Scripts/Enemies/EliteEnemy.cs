@@ -184,4 +184,9 @@ public class EliteEnemy : MonoBehaviour, INavigable
         Vector2 direction = new Vector2(playerPosition.x - transform.position.x, playerPosition.y - transform.position.y);
         transform.up = direction;
     }
+
+    public void SetSpeedMultiplier(float newSpeedMultiplier)
+    {
+        m_movementSpeed = m_defaultSpeed * newSpeedMultiplier;
+    }
 }
