@@ -4910,6 +4910,6 @@ MonoBehaviour:
   currentAmmo: 100
   clipAmmo: 100
   reserveAmmo: 100
-  m_damage: 10
+  m_damage: 20
   m_duration: 5
   m_firePrefab: {fileID: 7723989353399453095, guid: b44064bb7e4f7ab46874fbd9f000ecf3, type: 3}

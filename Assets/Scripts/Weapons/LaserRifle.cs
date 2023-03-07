@@ -12,6 +12,7 @@ public class LaserRifle : MonoBehaviour, IShootable
     [SerializeField] private float damage;
 
     private Transform firePos;
+    private LineRenderer lineRenderer;
     private bool canShoot;
     private RaycastHit hit;
 
@@ -24,7 +25,8 @@ public class LaserRifle : MonoBehaviour, IShootable
     public void Init()
     {
         canShoot = true;
-        firePos = this.transform.Find("FirePos");
+        firePos = this.transform.GetChild(0);
+        lineRenderer = this.GetComponent<LineRenderer>();
     }
 
     public void Run()
@@ -58,7 +60,15 @@ public class LaserRifle : MonoBehaviour, IShootable
 
             // Check Raycast has hit a collider
             RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
-            if (hit.collider == null) return;
+
+            if (hit.collider != null)
+            {
+                Draw2DLine(firePos.transform.position, hit.point);
+            }
+            else
+            {
+                Draw2DLine(firePos.transform.position, Vector3.forward * range);
+            }
 
             // Check if collider gameobject has health component
             GameObject myObject = hit.collider.gameObject;
@@ -79,6 +89,12 @@ public class LaserRifle : MonoBehaviour, IShootable
         currentAmmo--;
         }
     Invoke("ResetShot", fireRate);        
+    }
+
+    private void Draw2DLine(Vector3 pos1, Vector3 pos2)
+    {
+        lineRenderer.SetPosition(0, pos1);
+        lineRenderer.SetPosition(1, pos2);
     }
 
     public void ResetShot()
