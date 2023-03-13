@@ -7,11 +7,9 @@ public class ScoreParticle : MonoBehaviour
     [SerializeField] private int m_scorePerParticle;
 
     private ParticleSystem m_mySystem;
-
     private List<ParticleSystem.Particle> m_particles;
 
     public delegate void ParticlePickup(int amount);
-
     public static ParticlePickup OnParticlePickup;
 
     private void Start()
@@ -27,9 +25,6 @@ public class ScoreParticle : MonoBehaviour
 
         for(int i = 0; i < particleCount; i++)
         {
-            ParticleSystem.Particle particle = m_particles[i];
-            particle.startColor = Color.red;
-            m_particles[i] = particle;
             OnParticlePickup?.Invoke(m_scorePerParticle);
         }
 

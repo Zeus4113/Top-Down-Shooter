@@ -21,4 +21,9 @@ public class ScoreTracker : MonoBehaviour
         currentScore += amount;
         m_textMeshPro.text = currentScore.ToString();
     }
+
+    public int GetScore()
+    {
+        return currentScore;
+    }
 }
