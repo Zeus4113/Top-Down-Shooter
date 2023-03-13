@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float m_maxHealth;
     [SerializeField] private GameObject m_firePrefab;
+    [SerializeField] private GameObject m_scorePuddle;
     [SerializeField] private bool m_fireResistance;
     [SerializeField] private bool m_acidResistance;
     [SerializeField] private bool m_electricalResistance;
@@ -68,6 +69,7 @@ public class Health : MonoBehaviour
         if (m_currentHealth <= 0)
         {
             myIsDead.Invoke(this.gameObject);
+            Instantiate(m_scorePuddle, transform.position, Quaternion.identity);
             Destroy(gameObject);
             return false;
         }

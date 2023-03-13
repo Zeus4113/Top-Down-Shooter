@@ -14,31 +14,32 @@ public class AcidPool : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject != null)
-        {        
-            StartCoroutine(Damage(collision.gameObject));
-            StartCoroutine(SlowedSpeed(collision.gameObject));
-        }
+        if (collision.gameObject == null) return;
+
+        if (!collision.gameObject.CompareTag("Enemy")) return;
+
+        StartCoroutine(Damage(collision.gameObject));
+        StartCoroutine(SlowedSpeed(collision.gameObject));
     }
 
     private IEnumerator Damage(GameObject myObject)
     {
         for(int i = 0; i < duration; i++)
         {
-            if (myObject == null) yield return null;
+            if (myObject == null) break;
 
-            if (myObject.GetComponent<Health>() == null) yield return null;
+            if (myObject.GetComponent<Health>() == null) break;
 
-            float health = myObject.GetComponent<Health>().GetHealth();
+            Health health = myObject.GetComponent<Health>();
 
-            switch (myObject.GetComponent<Health>().CheckResistance())
+            switch (health.CheckResistance())
             {
                 case DamageType.none:
-                    myObject.GetComponent<Health>().Damage(damage);
+                    health.Damage(damage);
                     break;
 
                 case DamageType.acid:
-                    myObject.GetComponent<Health>().Heal(damage);
+                    health.Heal(damage);
                     break;
             }
             yield return new WaitForSeconds(1f);
@@ -51,12 +52,16 @@ public class AcidPool : MonoBehaviour
         if (myObject == null) yield return null;
 
         if (myObject.GetComponent<INavigable>() == null) yield return null;
-            
-        myObject.GetComponent<INavigable>().SetSpeedMultiplier(0.3f);
+
+        INavigable enemy = myObject.GetComponent<INavigable>();
+
+        enemy.SetSpeedMultiplier(0.3f);
 
         yield return new WaitForSeconds(3f);
 
-        myObject.GetComponent<INavigable>().SetSpeedMultiplier(1f);
+        if (myObject == null) yield return null;
+
+        enemy.SetSpeedMultiplier(1f);
 
         yield return null;
     }
