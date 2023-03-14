@@ -13,6 +13,7 @@ public class ScoreTracker : MonoBehaviour
     {
         m_textMeshPro = m_scoreUI.GetComponent<TMPro.TMP_Text>();
 
+        ScoreDepot.depositTick += ChangeScore;
         ScoreParticle.OnParticlePickup += ChangeScore;
     }
 

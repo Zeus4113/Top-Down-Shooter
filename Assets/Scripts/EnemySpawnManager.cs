@@ -6,10 +6,12 @@ public class EnemySpawnManager : MonoBehaviour
 {
     // Serialized Variables
     [SerializeField] private GameObject m_spawnPoint;
+    [SerializeField] private int m_waveCount;
 
 
     // Private Variables
     private List<Transform> m_spawnPointTransforms;
+    private bool m_isActive;
 
     // Events
     public delegate void EnemySpawn(SpawnPoint spawnPoint);
@@ -24,16 +26,34 @@ public class EnemySpawnManager : MonoBehaviour
             m_spawnPointTransforms.Add(this.transform.GetChild(i));
         }
 
-        StartCoroutine(SpawnPoints());
+        //StartCoroutine(SpawnPoints());
         
+    }
+
+    public void SetActive(bool isTrue)
+    {
+        m_isActive = isTrue;
+        if (m_isActive)
+        {
+            StartCoroutine(SpawnPoints());
+        }
+        else if (!m_isActive)
+        {
+            StopAllCoroutines();
+        }
     }
 
     private IEnumerator SpawnPoints()
     {
-        for(int i = 0; i < 10; i++)
+        while (m_isActive)
         {
-            AddSpawnPoint();
-            yield return new WaitForSeconds(2f);
+            for (int i = 0; i < m_waveCount; i++)
+            {
+                AddSpawnPoint();
+                yield return new WaitForSeconds(2f);
+            }
+
+            break;
         }
 
         yield return null;

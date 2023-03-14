@@ -5,10 +5,10 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] m_levelAreas;
-    [SerializeField] private List<INavigable> m_enemies;
-    [SerializeField] private List<SpawnPoint> m_enemySpawns;
+    [SerializeField] private EnemySpawnManager[] m_spawnManagers;
 
-    [SerializeField] private EnemySpawnManager m_spawnManager;
+    private List<INavigable> m_enemies;
+    private List<SpawnPoint> m_enemySpawns;
 
     public void Init()
     {
@@ -20,7 +20,10 @@ public class EnemyManager : MonoBehaviour
         Health.myIsDead += RemoveEnemy;
         SpawnPoint.removeSpawn += RemoveEnemySpawnPoint;
 
-        m_spawnManager.Init();
+        for (int i = 0; i < m_spawnManagers.Length; i++)
+        {
+            m_spawnManagers[i].Init();
+        }
 
         for (int i = 0; i < m_levelAreas.Length; i++)
         {
@@ -60,17 +63,6 @@ public class EnemyManager : MonoBehaviour
     public void RemoveEnemySpawnPoint(SpawnPoint oldEnemySpawn)
     {
         m_enemySpawns.Remove(oldEnemySpawn);
-    }
-
-    private void LevelAreaRun()
-    {
-        if (m_levelAreas.Length == 0) return;
-
-        for (int i = 0; i < m_levelAreas.Length; i++)
-        {
-            LevelArea myLevelArea = m_levelAreas[i].GetComponent<LevelArea>();
-            myLevelArea.Run();
-        }
     }
 
     private void EnemiesRun()

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6667682177729734196}
   - component: {fileID: 4966143086878887221}
   - component: {fileID: -2257620093912223559}
+  - component: {fileID: 1508361059}
   m_Layer: 0
   m_Name: ScorePuddle
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &6667682177729734196
 ParticleSystem:
@@ -224,7 +225,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.8301887, g: 0.8027561, b: 0.28586686, a: 0}
+      maxColor: {r: 0.8301887, g: 0.8027561, b: 0.28586686, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -3860,11 +3861,9 @@ ParticleSystem:
     outside: 0
     enter: 2
     exit: 1
-    colliderQueryMode: 0
+    colliderQueryMode: 2
     radiusScale: 1
-    primitives:
-    - {fileID: -2257620093912223559}
-    - {fileID: 859944438164395543, guid: 6a4b9bc3c4ea78143b1cc7d545c429ba, type: 3}
+    primitives: []
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -4889,3 +4888,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_scorePerParticle: 1
+--- !u!58 &1508361059
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8597630219493614282}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.09040439, y: 0.005165577}
+  serializedVersion: 2
+  m_Radius: 2
