@@ -19,7 +19,7 @@ public class Fire : MonoBehaviour
         {
             // collision.gameObject.GetComponent<Health>().Ignite(m_damage, m_duration);
 
-            Ignite(m_damage, m_duration, collision.gameObject);
+            // Ignite(m_damage, m_duration, collision.gameObject);
         }
     }
 

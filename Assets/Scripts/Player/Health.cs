@@ -22,6 +22,9 @@ public class Health : MonoBehaviour
     public delegate void isDead(GameObject deadObject);
     public static isDead myIsDead;
 
+    public delegate void HealthChange(float health);
+    public static HealthChange myHealthChange;
+
     public void Init()
     {
         m_healParticle = GetComponentInChildren<ParticleSystem>();
@@ -42,16 +45,19 @@ public class Health : MonoBehaviour
             m_healParticle.Play();    
         }
         m_currentHealth += health;
+        UpdateIfPlayer();
     }
 
     public void Damage(float damage)
     {
         m_currentHealth -= damage;
+        UpdateIfPlayer();
     }
 
     public void SetHealth(float health)
     {
         m_currentHealth = health;
+        UpdateIfPlayer();
     }
 
     public float GetHealth()
@@ -86,53 +92,14 @@ public class Health : MonoBehaviour
         return m_isIgnited;
     }
 
-    /*
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void UpdateIfPlayer()
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (this.gameObject == null) return;
+        if (this.gameObject.CompareTag("Player"))
         {
-            Heal(collision.gameObject.GetComponent<Bullet>().GetDamage());
-        }
-
-        if (collision.gameObject.CompareTag("Rocket"))
-        {
-            Damage(collision.gameObject.GetComponent<Rocket>().GetDamage());
+            myHealthChange?.Invoke(m_currentHealth);
         }
     }
-    
-
-    // Ignited Functions
-
-    public void Ignite(float tickDamage, float duration)
-    {
-        if(isIgnited == false && this.gameObject != null)
-        {
-            isIgnited = true;
-            StartCoroutine(Ignited(tickDamage, duration));
-            myFire = Instantiate(m_firePrefab, transform.position, transform.rotation);
-            myFire.transform.localScale = transform.localScale * 1.5f;
-        }
-    }
-
-    public IEnumerator Ignited(float tickDamage, float duration)
-    {
-        for(int i = 0; i < duration; i++)
-        {
-            if (m_fireResistance)
-            {
-                Heal(tickDamage);
-            }
-            else
-            {
-                Damage(tickDamage);
-            }
-            
-            yield return new WaitForSeconds(1f);
-        }
-        isIgnited = false;
-        yield return null;
-    }
-    */
 
     // Health Pickup
 
@@ -168,7 +135,6 @@ public class Health : MonoBehaviour
     }
 
 }
-
 public enum DamageType
 {
     none,
