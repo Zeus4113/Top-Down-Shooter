@@ -114,7 +114,7 @@ public class CapturePoint : MonoBehaviour
 
         for (int i = 0; i < m_interactables.Length; i++)
         {
-            m_interactables[i].GetComponent<IInteractable>().Activate();
+           // m_interactables[i].GetComponent<IInteractable>().Activate();
         }
     }
 }

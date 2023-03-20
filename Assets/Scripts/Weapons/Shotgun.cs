@@ -54,7 +54,7 @@ public class Shotgun : MonoBehaviour, IShootable
             {
                 GameObject newBullet = Instantiate(bullet, firePos.transform.position, Quaternion.identity);
 
-                newBullet.GetComponent<Bullet>().Init();
+                newBullet.GetComponent<Bullet>().Init(null);
 
                 newBullet.GetComponent<Bullet>().SetDirection(firePos.transform.up += (new Vector3(Random.Range(-spread, spread), Random.Range(-spread, spread), 0)));
             }

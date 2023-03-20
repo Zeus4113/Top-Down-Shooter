@@ -11,29 +11,26 @@ public class Door : MonoBehaviour, IInteractable
     public void Init()
     {
         m_Renderer = GetComponent<SpriteRenderer>();
-        Deactivate();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void Interact()
     {
-        if (collision == null) return;
+        StartCoroutine(OpenDoor());
+    }
+    
+    private IEnumerator OpenDoor()
+    {
+        float myAlpha = m_Renderer.material.color.a;
+        float startAlpha = myAlpha;
 
-        if (m_isActive)
+        for (int i = 0; i < (startAlpha * 10); i++)
         {
-            SceneManager.LoadSceneAsync("WinScene");
+            myAlpha = (startAlpha - (i / 10));
+            yield return new WaitForSeconds(0.1f); 
         }
-    }
 
-    public void Activate()
-    {
-        m_isActive = true;
-        m_Renderer.color = Color.green;
-        Debug.Log("Door Open");
-    }
+        gameObject.SetActive(false);
 
-    public void Deactivate()
-    {
-        m_isActive = false;
-        m_Renderer.color = Color.red;
+        yield return null;
     }
 }

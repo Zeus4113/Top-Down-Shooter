@@ -70,7 +70,7 @@ public class Shooter : MonoBehaviour
     {
         canShoot = false;
         GameObject newBullet = Instantiate(bullet, firePos.position, Quaternion.identity);
-        newBullet.gameObject.GetComponent<Bullet>().Init();
+        newBullet.gameObject.GetComponent<Bullet>().Init(null);
         newBullet.GetComponent<Bullet>().SetDirection(firePos.transform.up);
 
         Invoke("ResetShot", fireRate);

@@ -25,7 +25,8 @@ public class EliteEnemy : MonoBehaviour, INavigable
     [SerializeField] private float m_meleeAttackRange;
     [SerializeField] private GameObject m_myBullet;
 
-
+	[SerializeField] private Bullet m_BulletPrefab;
+	[SerializeField] private ProjectileSO m_BulletData;
 
     public void Start()
     {
@@ -109,14 +110,16 @@ public class EliteEnemy : MonoBehaviour, INavigable
         Rigidbody2D targetBody = myTarget.GetComponent<Rigidbody2D>();
         Debug.Log("Range Attacking!");
 
+        // Line of sight check
         RaycastHit2D myHit = Physics2D.Raycast(transform.position, myTarget.transform.position);
 
         if (myHit.collider == null) return;
 
         FaceEnemy(myTarget);
-        GameObject myProjectile = Instantiate(m_myBullet, m_firePos.position, Quaternion.identity);
-        Debug.Log("Spawned:", myProjectile); 
-        myProjectile.GetComponent<Bullet>().Init();
+        GameObject myProjectile = Instantiate(m_myBullet, m_firePos.position, transform.rotation);
+        Debug.Log("Spawned:", myProjectile);
+
+        myProjectile.GetComponent<Bullet>().Init(null);
 
         m_attackReset = false;
         m_attackCooldown = 1.5f;

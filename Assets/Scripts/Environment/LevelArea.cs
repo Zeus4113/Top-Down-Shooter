@@ -35,6 +35,7 @@ public class LevelArea : MonoBehaviour
 
         if(myObject.tag == "Player")
         {
+			Debug.Log("PlayerPresent");
             m_isPresent = true;
             m_spawnManager.SetActive(m_isPresent);
         }

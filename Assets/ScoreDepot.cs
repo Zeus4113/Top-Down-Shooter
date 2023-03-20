@@ -7,6 +7,7 @@ public class ScoreDepot : MonoBehaviour
     [SerializeField] private int m_maxScore;
     [SerializeField] private GameObject m_scoreUI;
     [SerializeField] private EnemySpawnManager m_spawnManager;
+    [SerializeField] private GameObject[] m_interactables;
 
 
     private int m_currentScoreDeposited;
@@ -86,6 +87,11 @@ public class ScoreDepot : MonoBehaviour
     {
         m_isComplete = true;
         m_spawnManager.SetActive(false);
+
+        for(int i = 0; i < m_interactables.Length; i++)
+        {
+            m_interactables[i].GetComponent<IInteractable>().Interact();
+        }
 
     }
 }

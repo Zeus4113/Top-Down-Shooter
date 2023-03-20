@@ -138,11 +138,11 @@ public class Heater : MonoBehaviour
 
             if (isActive)
             {
-               myObject.Activate();
+               //myObject.Activate();
             }
             else if (!isActive)
             {
-                myObject.Deactivate();
+                //myObject.Deactivate();
             }
 
         }
@@ -153,11 +153,11 @@ public class Heater : MonoBehaviour
 
             if (isActive)
             {
-                myObject.Activate();
+                //myObject.Activate();
             }
             else if (!isActive)
             {
-                myObject.Deactivate();
+                //myObject.Deactivate();
             }
         }
     }

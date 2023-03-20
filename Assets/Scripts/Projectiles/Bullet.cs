@@ -2,50 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float m_damage;
-    [SerializeField] private float m_speed;
-    [SerializeField] private float m_bulletTime;
-    [SerializeField] private float m_force;
+	private Rigidbody2D m_RB;
+	private ProjectileSO m_Data;
 
-    private Vector3 m_direction;
-    private float m_currentTime;
+	private void Awake()
+	{
+		m_RB = GetComponent<Rigidbody2D>();
+	}
 
-    public void Init()
-    {
-        StartCoroutine(MoveObject());
-        m_currentTime = 0f;
-    }
+	public void Init(ProjectileSO data)
+	{
+		m_Data = data;
+		m_RB.velocity = transform.up * m_Data.MoveSpeed;
+		StartCoroutine(C_CrankedFilmPlot());
+		
+	}
 
-    private IEnumerator MoveObject()
-    {
-        do {
+	private IEnumerator C_CrankedFilmPlot()
+	{
+		yield return new WaitForSeconds(m_Data.Lifespan);
+		Destroy(gameObject);
+	}
 
-            Debug.Log("Moving", gameObject);
-            transform.Translate(m_direction * m_speed * Time.deltaTime);
-            yield return new WaitForSeconds(1f);
-            m_currentTime++;
+	protected virtual void OnCollisionEnter2D(Collision2D collision)
+	{
+		collision.gameObject.GetComponent<Health>()?.Damage(m_Data.Damage);
 
-        } while (m_currentTime < m_bulletTime);
+		Destroy(gameObject);
+	}
 
-        yield return null;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 2) return;
-
-        if (collision.gameObject.GetComponent<Health>() != null)
-        {
-            collision.gameObject.GetComponent<Health>().Damage(m_damage);
-        }
-
-        Destroy(gameObject);
-    }
-
-    public void SetDirection(Vector3 direction)
-    {
-        this.m_direction = direction.normalized;
-    }
+	public void SetDirection(Vector3 direction)
+	{
+		//this.m_direction = direction.normalized;
+	}
 }
