@@ -6,6 +6,8 @@ public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] weaponList;
     [SerializeField] private int[] reserveAmmoList;
+    [SerializeField] private GameObject m_ammoCounter;
+    [SerializeField] private GameObject m_weaponName;
 
     private GameObject currentWeapon;
     private Transform mountPos;
@@ -14,28 +16,42 @@ public class WeaponManager : MonoBehaviour
     private int currentAmmo;
     private int clipAmmo;
     private int updateCount;
+    private TMPro.TMP_Text m_ammoText;
+    private TMPro.TMP_Text m_weaponText;
 
     public delegate void Pickup();
     public static Pickup shotgunAmmo;
     public static Pickup rocketAmmo;
     public static Pickup laserAmmo;
 
-    public void Awake()
+    public void Init()
     {
         player = GameObject.Find("PlayerCharacter");
         mountPos = player.transform.Find("mountPos");
+        m_ammoText = m_ammoCounter.GetComponent<TMPro.TMP_Text>();
+        m_weaponText = m_weaponName.GetComponent<TMPro.TMP_Text>();
 
         shotgunAmmo = ShotgunAmmoPickup;
         rocketAmmo = RocketAmmoPickup;
         laserAmmo = LaserAmmoPickup;
 
-    }
+        Flamethrower.updateAmmo = UpdateCurrentAmmoHUD;
+        RocketLauncher.updateAmmo = UpdateCurrentAmmoHUD;
+        LaserRifle.updateAmmo = UpdateCurrentAmmoHUD;
 
-    public void Init()
-    {
         currentWeaponIndex = 0;
         UpdateWeapon();
+        UpdateWeaponNameHUD();
         updateCount = 0;
+
+        for(int i = 0; i < weaponList.Length; i++)
+        {
+            weaponList[i].GetComponent<IShootable>().Init();
+        }
+
+        int myCurrentAmmo = currentWeapon.GetComponent<IShootable>().GetCurrentAmmo();
+        int myReserveAmmo = currentWeapon.GetComponent<IShootable>().GetReserveAmmo();
+        UpdateCurrentAmmoHUD(myCurrentAmmo, myReserveAmmo);
     }
     
     public void Run()
@@ -65,15 +81,37 @@ public class WeaponManager : MonoBehaviour
 
             UpdateWeapon();
             SetReserveAmmo();
+            UpdateWeaponNameHUD();
+
+            int myCurrentAmmo = currentWeapon.GetComponent<IShootable>().GetCurrentAmmo();
+            int myReserveAmmo = currentWeapon.GetComponent<IShootable>().GetReserveAmmo();
+            UpdateCurrentAmmoHUD(myCurrentAmmo, myReserveAmmo);
             updateCount++;
         }
     }
 
+    private void UpdateWeaponNameHUD()
+    {
+        m_weaponText.text = currentWeapon.name;
+    }
+
+    private void UpdateCurrentAmmoHUD(int currentAmmo, int reserveAmmo)
+    {
+        m_ammoText.text = currentAmmo + " / " + reserveAmmo;
+    }
+
     private void UpdateWeapon()
-    {   
-        Destroy(currentWeapon);
-        currentWeapon = Instantiate(weaponList[currentWeaponIndex], mountPos.transform.position, mountPos.transform.rotation);
-        InitWeapon();
+    {  
+        if(currentWeapon != null)
+        {
+            currentWeapon.SetActive(false);
+        }
+        currentWeapon = weaponList[currentWeaponIndex];
+        currentWeapon.SetActive(true);
+
+        //Destroy(currentWeapon);
+        //currentWeapon = Instantiate(weaponList[currentWeaponIndex], mountPos.transform.position, mountPos.transform.rotation);
+        //InitWeapon();
     }
 
     private void UpdateWeaponPosition()

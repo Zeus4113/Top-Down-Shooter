@@ -88,6 +88,11 @@ public class Shotgun : MonoBehaviour, IShootable
         Debug.Log(clipAmmo);
         Debug.Log(reserveAmmo);
     }
+
+    public int GetCurrentAmmo()
+    {
+        return currentAmmo;
+    }
     public int GetReserveAmmo()
     {
         return reserveAmmo;

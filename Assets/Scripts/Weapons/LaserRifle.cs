@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class LaserRifle : MonoBehaviour, IShootable
 {
@@ -12,8 +13,12 @@ public class LaserRifle : MonoBehaviour, IShootable
     [SerializeField] private float damage;
 
     private Transform firePos;
+    private LineRenderer lineRenderer;
     private bool canShoot;
     private RaycastHit hit;
+
+    public delegate void LaserDelegate(int currentAmmo, int reserveAmmo);
+    public static LaserDelegate updateAmmo;
 
     /*
     public delegate void OnRaycastHit();
@@ -24,7 +29,9 @@ public class LaserRifle : MonoBehaviour, IShootable
     public void Init()
     {
         canShoot = true;
-        firePos = this.transform.Find("FirePos");
+        firePos = this.transform.Find("firePos");
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.enabled = false;
     }
 
     public void Run()
@@ -54,35 +61,60 @@ public class LaserRifle : MonoBehaviour, IShootable
         {
             canShoot = false;
 
-            Debug.DrawLine(transform.position, (transform.up * range), Color.green, 0.25f);
+            RaycastHit2D[] myHit = Physics2D.LinecastAll(firePos.position, transform.up * range);
+            //Handles.DrawLine(transform.position, (transform.up * range), 1f);
 
-            // Check Raycast has hit a collider
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up);
-            if (hit.collider == null) return;
+            Vector3[] myVectors = new Vector3[myHit.Length+1];
 
-            // Check if collider gameobject has health component
-            GameObject myObject = hit.collider.gameObject;
-            if (myObject.GetComponent<Health>() == null) return;
 
-            // Check resistances and deal damage accordingly
-            Health health = myObject.GetComponent<Health>();
-            switch (health.CheckResistance())
+            lineRenderer.positionCount = myVectors.Length;
+            for (int i = 0; i < myVectors.Length; i++)
             {
-                case DamageType.lightning:
-                    health.Heal(damage);
-                    break;
+                if(i == 0)
+                {
+                    myVectors[i] = firePos.position;
+                }
+                else
+                {
+                    myVectors[i] = myHit[i-1].transform.position;
+                }
 
-                default:
-                    health.Damage(damage);
-                    break;
-            }              
-        currentAmmo--;
-        }
-    Invoke("ResetShot", fireRate);        
+            }
+
+            lineRenderer.SetPositions(myVectors);
+            lineRenderer.enabled = true;
+
+            for (int i = 0; i < myHit.Length; i++)
+            {
+                Debug.Log(myHit[i].ToString());
+
+                GameObject myObject = myHit[i].collider.gameObject;
+                if(myObject.GetComponent<Health>() != null)
+                {
+                    Health myHealth = myObject.GetComponent<Health>();
+
+                    switch (myHealth.CheckResistance())
+                    {
+                        default:
+                            myHealth.Damage(damage);
+                            break;
+
+                        case DamageType.lightning:
+                            myHealth.Heal(damage);
+                            break;
+                    }
+                }
+            }
+            currentAmmo--;
+        updateAmmo?.Invoke(currentAmmo, reserveAmmo);
+        Invoke("ResetShot", fireRate);
+        }       
     }
 
     public void ResetShot()
     {
+        Debug.Log("Shot Reset", gameObject);
+        lineRenderer.enabled = false;
         canShoot = true;
     }
     public void Reload()
@@ -114,6 +146,12 @@ public class LaserRifle : MonoBehaviour, IShootable
                 }
             }
         }
+        updateAmmo?.Invoke(currentAmmo, reserveAmmo);
+    }
+
+    public int GetCurrentAmmo()
+    {
+        return currentAmmo;
     }
     public int GetReserveAmmo()
     {

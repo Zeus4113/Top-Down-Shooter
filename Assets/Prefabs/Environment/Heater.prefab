@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 129592845}
   - component: {fileID: 129592846}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8138783574097418179}
   - component: {fileID: 8138783574097418047}
   - component: {fileID: 802980582}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Heater
   m_TagString: Untagged
   m_Icon: {fileID: 0}

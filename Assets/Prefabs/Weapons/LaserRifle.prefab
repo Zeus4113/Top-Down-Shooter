@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1335108673950024035}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: firePos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1335108674332664839}
   - component: {fileID: 1335108674332664836}
   - component: {fileID: 1335108674332664837}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LaserRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

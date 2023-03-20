@@ -13,6 +13,9 @@ public class RocketLauncher : MonoBehaviour, IShootable
     private Transform firePos;
     private bool canShoot;
 
+    public delegate void RocketDelegate(int currentAmmo, int reserveAmmo);
+    public static RocketDelegate updateAmmo;
+
     public void Init()
     {
         Debug.Log("Rocket Launcher Init");
@@ -43,6 +46,7 @@ public class RocketLauncher : MonoBehaviour, IShootable
                 Reload();
             }
         }
+
     }
 
     public void Shoot()
@@ -56,6 +60,7 @@ public class RocketLauncher : MonoBehaviour, IShootable
             newRocket.GetComponent<Rocket>().SetDirection(firePos.transform.up);
             
             currentAmmo--;
+            updateAmmo?.Invoke(currentAmmo, reserveAmmo);
         }
         Invoke("ResetShot", fireRate);
 
@@ -67,7 +72,6 @@ public class RocketLauncher : MonoBehaviour, IShootable
     }
     public void Reload()
     {
-
         if (reserveAmmo > clipAmmo)
         {
             int tempAmmo;
@@ -80,6 +84,13 @@ public class RocketLauncher : MonoBehaviour, IShootable
             currentAmmo = reserveAmmo;
             reserveAmmo = 0;
         }
+
+        updateAmmo?.Invoke(currentAmmo, reserveAmmo);
+    }
+
+    public int GetCurrentAmmo()
+    {
+        return currentAmmo;
     }
 
     public int GetReserveAmmo()

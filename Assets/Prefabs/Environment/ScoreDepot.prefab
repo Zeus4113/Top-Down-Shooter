@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7422040316213876208}
   - component: {fileID: 7422040316213876206}
   - component: {fileID: 7422040316213876207}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 7422040316646068171}
   - component: {fileID: 7422040316646068172}
   - component: {fileID: 7422040316646068168}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ScoreDepot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,6 +218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxScore: 500
+  m_scoreUI: {fileID: 0}
+  m_spawnManager: {fileID: 0}
 --- !u!50 &7422040316646068168
 Rigidbody2D:
   serializedVersion: 4

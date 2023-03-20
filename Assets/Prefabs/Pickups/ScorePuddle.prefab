@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4966143086878887221}
   - component: {fileID: -2257620093912223559}
   - component: {fileID: 1508361059}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ScorePuddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

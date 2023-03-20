@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2105369721622058554}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: firePos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 2105369721869838805}
   - component: {fileID: 2105369721869838802}
   - component: {fileID: 2105369721869838803}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

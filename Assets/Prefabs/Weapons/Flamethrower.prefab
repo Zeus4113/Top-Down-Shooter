@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5096512835355355969}
   - component: {fileID: 1600106135612658605}
   - component: {fileID: 7865984173874442537}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Flamethrower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2361622738521237386
 SpriteRenderer:
@@ -4907,9 +4907,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2e9e4f99eb6e94e90d31de3f6b7d9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAmmo: 100
-  clipAmmo: 100
-  reserveAmmo: 100
+  m_currentAmmo: 0
+  m_clipAmmo: 0
+  m_reserveAmmo: 100
   m_damage: 20
   m_duration: 5
   m_firePrefab: {fileID: 7723989353399453095, guid: b44064bb7e4f7ab46874fbd9f000ecf3, type: 3}

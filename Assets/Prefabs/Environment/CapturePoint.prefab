@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5453781994291684439}
   - component: {fileID: 5453781994291684438}
   - component: {fileID: 5453781994291684441}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CapturePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 5453781994587025103}
   - component: {fileID: 5453781994587025102}
   - component: {fileID: 5453781994587024945}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CapturePoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

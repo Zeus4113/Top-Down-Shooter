@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Flamethrower : MonoBehaviour, IShootable
 {
-    [SerializeField] private int currentAmmo;
-    [SerializeField] private int clipAmmo;
-    [SerializeField] private int reserveAmmo;
+    [SerializeField] private int m_currentAmmo;
+    [SerializeField] private int m_clipAmmo;
+    [SerializeField] private int m_reserveAmmo;
     [SerializeField] private float m_damage;
     [SerializeField] private float m_duration;
     [SerializeField] private GameObject m_firePrefab; 
@@ -16,10 +16,13 @@ public class Flamethrower : MonoBehaviour, IShootable
     private Collider2D col;
     private bool m_isFiring;
 
+    public delegate void FlamethrowerDelegate(int currentAmmo, int reserveAmmo);
+    public static FlamethrowerDelegate updateAmmo;
+
     public void Init()
     {
-        clipAmmo = 100;
-        currentAmmo = clipAmmo;
+        m_clipAmmo = 100;
+        m_currentAmmo = m_clipAmmo;
         mySystem = GetComponent<ParticleSystem>();
         col = GetComponent<Collider2D>();      
     }
@@ -143,7 +146,7 @@ public class Flamethrower : MonoBehaviour, IShootable
 
     public void Shoot()
     {
-        if(currentAmmo > 0)
+        if(m_currentAmmo > 0)
         {
             m_isFiring = true;
             mySystem.Play();
@@ -178,13 +181,14 @@ public class Flamethrower : MonoBehaviour, IShootable
 
     private IEnumerator DrainFuel()
     {
-        while (m_isFiring && currentAmmo > 0)
+        while (m_isFiring && m_currentAmmo > 0)
         {
-            currentAmmo--;
+            m_currentAmmo--;
+            updateAmmo?.Invoke(m_currentAmmo, m_reserveAmmo);
             yield return new WaitForSeconds(0.075f);
         }
 
-        if(currentAmmo <= 0)
+        if(m_currentAmmo <= 0)
         {
             ResetShot();
         }
@@ -194,41 +198,48 @@ public class Flamethrower : MonoBehaviour, IShootable
 
     public void Reload()
     {
-        if(currentAmmo < clipAmmo)
+        if(m_currentAmmo < m_clipAmmo)
         {
 
-            if(reserveAmmo > clipAmmo)
+            if(m_reserveAmmo > m_clipAmmo)
             {
-                int usedAmmo = currentAmmo - clipAmmo;
-                reserveAmmo += usedAmmo;
-                currentAmmo = clipAmmo;
+                int usedAmmo = m_currentAmmo - m_clipAmmo;
+                m_reserveAmmo += usedAmmo;
+                m_currentAmmo = m_clipAmmo;
             }
-            else if(reserveAmmo <= clipAmmo)
+            else if(m_reserveAmmo <= m_clipAmmo)
             {
-                if(currentAmmo + reserveAmmo > clipAmmo)
+                if(m_currentAmmo + m_reserveAmmo > m_clipAmmo)
                 {
-                    int leftOverAmmo = currentAmmo + reserveAmmo - clipAmmo;
-                    currentAmmo = clipAmmo;
-                    reserveAmmo = leftOverAmmo;
+                    int leftOverAmmo = m_currentAmmo + m_reserveAmmo - m_clipAmmo;
+                    m_currentAmmo = m_clipAmmo;
+                    m_reserveAmmo = leftOverAmmo;
 
                 }
-                else if(currentAmmo + reserveAmmo <= clipAmmo)
+                else if(m_currentAmmo + m_reserveAmmo <= m_clipAmmo)
                 {
-                    currentAmmo = reserveAmmo + currentAmmo;
-                    reserveAmmo = 0;
+                    m_currentAmmo = m_reserveAmmo + m_currentAmmo;
+                    m_reserveAmmo = 0;
                 }
             }
         }
+
+        updateAmmo?.Invoke(m_currentAmmo, m_reserveAmmo);
+    }
+
+    public int GetCurrentAmmo()
+    {
+        return m_currentAmmo;
     }
 
     public int GetReserveAmmo()
     {
-        return reserveAmmo;
+        return m_reserveAmmo;
     }
 
     public void SetReserveAmmo(int amount)
     {
-        reserveAmmo = amount;
+        m_reserveAmmo = amount;
     }
 
 }

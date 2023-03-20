@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2899576400770850918}
   - component: {fileID: 5792805671079100587}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4792651240880556}
   - component: {fileID: 4228482813027082153}
   - component: {fileID: 595314208}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SpawnPoint
   m_TagString: Spawner
   m_Icon: {fileID: 0}
