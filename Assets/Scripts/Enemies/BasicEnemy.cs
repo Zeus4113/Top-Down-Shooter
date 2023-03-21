@@ -15,6 +15,7 @@ public class BasicEnemy : MonoBehaviour, INavigable
     private GameObject m_playerRef;
 	private EnemyStatsSO m_enemyStatsSO;
 	private SpriteRenderer m_spriteRenderer;
+	private float m_speed;
 
     // Editor member variables
     [SerializeField] private float m_attackForce;
@@ -30,7 +31,8 @@ public class BasicEnemy : MonoBehaviour, INavigable
         m_currentState = state.wandering;
         m_newPosition = FindNewPatrolPosition();
         m_defaultSpeed = m_enemyStatsSO.m_movementSpeed;
-        m_attackReset = true;
+		m_speed = m_enemyStatsSO.m_movementSpeed;
+		m_attackReset = true;
     }
 
     // Update is called once per frame
@@ -44,7 +46,7 @@ public class BasicEnemy : MonoBehaviour, INavigable
             // Wanders the navigatable area until the player is detected
             case state.wandering:
 
-				m_enemyStatsSO.m_movementSpeed = m_defaultSpeed;
+				m_speed = m_defaultSpeed;
                 m_currentPosition = transform.position;
 
                 if (Vector3.Distance(m_newPosition, m_currentPosition) < 0.1f)
@@ -107,7 +109,7 @@ public class BasicEnemy : MonoBehaviour, INavigable
 
     public void MoveToPosition(Vector3 pos1, Vector3 pos2) 
     {
-        transform.position = Vector3.MoveTowards(pos1, pos2, m_enemyStatsSO.m_movementSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(pos1, pos2, m_speed * Time.deltaTime);
     }
 
     public Vector3 FindNewPatrolPosition()
@@ -149,6 +151,6 @@ public class BasicEnemy : MonoBehaviour, INavigable
 
     public void SetSpeedMultiplier(float newSpeedMultiplier)
     {
-		m_enemyStatsSO.m_movementSpeed = m_defaultSpeed * newSpeedMultiplier;
+		m_speed = m_defaultSpeed * newSpeedMultiplier;
     }
 }

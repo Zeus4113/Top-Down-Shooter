@@ -49,9 +49,9 @@ public class AcidPool : MonoBehaviour
 
     private IEnumerator SlowedSpeed(GameObject myObject)
     {
-        if (myObject == null) yield return null;
+		if (myObject == null) yield break;
 
-        if (myObject.GetComponent<INavigable>() == null) yield return null;
+        if (myObject.GetComponent<INavigable>() == null) yield break;
 
         INavigable enemy = myObject.GetComponent<INavigable>();
 
@@ -59,7 +59,7 @@ public class AcidPool : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        if (myObject == null) yield return null;
+        if (myObject == null) yield break;
 
         enemy.SetSpeedMultiplier(1f);
 

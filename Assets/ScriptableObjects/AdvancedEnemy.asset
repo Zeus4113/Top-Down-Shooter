@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e410518fe0b21c147bb575359fe43c68, type: 3}
   m_Name: AdvancedEnemy
   m_EditorClassIdentifier: 
-  m_movementSpeed: 0.75
-  m_attackDamage: 125
+  m_movementSpeed: 2
+  m_attackDamage: 100
   m_attackRange: 2.5
   m_chaseSpeedMultiplier: 1
   m_sprite: {fileID: 21300000, guid: f186ac10af77a4a478ab27614e279367, type: 3}
