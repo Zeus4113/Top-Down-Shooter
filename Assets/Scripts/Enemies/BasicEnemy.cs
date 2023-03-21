@@ -27,7 +27,6 @@ public class BasicEnemy : MonoBehaviour, INavigable
 		m_healthComponent = gameObject.GetComponent<Health>();
 		m_spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 		m_spriteRenderer.sprite = m_enemyStatsSO.m_sprite;
-        m_healthComponent.Init();
         m_currentState = state.wandering;
         m_newPosition = FindNewPatrolPosition();
         m_defaultSpeed = m_enemyStatsSO.m_movementSpeed;

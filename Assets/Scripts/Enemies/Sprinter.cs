@@ -16,7 +16,7 @@ public class Sprinter : MonoBehaviour, IEffectable
 
     public void Init()
     {
-        gameObject.GetComponentInChildren<Health>().Init();
+        //gameObject.GetComponentInChildren<Health>().Init();
         currentState = state.wandering;
         currentSpeed = 4.5f;
         FindNewPosition();

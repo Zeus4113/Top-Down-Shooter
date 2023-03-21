@@ -34,7 +34,7 @@ public class AcidPool : MonoBehaviour
 
             switch (health.CheckResistance())
             {
-                case DamageType.none:
+				default:
                     health.Damage(damage);
                     break;
 

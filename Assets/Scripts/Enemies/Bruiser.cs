@@ -18,7 +18,7 @@ public class Bruiser : MonoBehaviour
     {
         Debug.Log("InitBruiser");
         GetComponentInChildren<AttackTrigger>().Init();
-        gameObject.GetComponentInChildren<Health>().Init();
+        //gameObject.GetComponentInChildren<Health>().Init();
         currentState = state.wandering;
         FindNewPosition();
     }

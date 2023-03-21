@@ -113,24 +113,28 @@ public class Flamethrower : MonoBehaviour, IShootable
 
     public IEnumerator Ignited(float tickDamage, float duration, GameObject target, GameObject myFire)
     {
+		if (target == null) yield break;
+
         Health targetHealth = target.GetComponent<Health>();
 
         for (int i = 0; i < duration; i++)
         {
-            // Check damage resistance of given enemy
-            switch (targetHealth.CheckResistance())
+			if (target == null) yield break;
+			// Check damage resistance of given enemy
+			switch (targetHealth.CheckResistance())
             {
-               case DamageType.none:
-
-                    targetHealth.Damage(tickDamage);
-
-                    break;
-
                 case DamageType.fire:
 
                     targetHealth.Heal(tickDamage);
 
                     break;
+
+				default:
+
+					targetHealth.Damage(tickDamage);
+
+					break;
+
             }
 
             yield return new WaitForSeconds(0.35f);

@@ -17,7 +17,7 @@ public class Shooter : MonoBehaviour
 
     public void Init()
     {
-        gameObject.GetComponentInChildren<Health>().Init();
+        //gameObject.GetComponentInChildren<Health>().Init();
         canShoot = true;
         firePos = this.transform.Find("FirePos");
         currentState = state.wandering;

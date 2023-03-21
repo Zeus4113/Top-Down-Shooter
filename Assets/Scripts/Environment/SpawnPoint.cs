@@ -11,8 +11,10 @@ public class SpawnPoint : MonoBehaviour, IInteractable
     [SerializeField] private float m_spawnDelay;
     [SerializeField] private int m_waveAmount;
 	[SerializeField] private EnemyStatsSO[] m_enemyStatsSO;
+	[SerializeField] private HealthStatsSO[] m_healthStats;
 
-    private bool m_isSpawning;
+
+	private bool m_isSpawning;
     private int m_currentWave;
 
     public delegate void SpawnPointDelegate(INavigable enemy);
@@ -66,19 +68,23 @@ public class SpawnPoint : MonoBehaviour, IInteractable
             GameObject enemy = Instantiate(enemyType[Random.Range(0, enemyType.Length - 1)], transform.position, transform.rotation);
             BasicEnemy basicEnemy = enemy.GetComponent<BasicEnemy>();
             INavigable enemyBase = enemy.GetComponent<INavigable>();
+			Health enemyHealth = enemy.GetComponent<Health>();
 
 			int randNum = Random.Range(0, 9);
 			if (randNum >= 0 && randNum < 5)
 			{
 				basicEnemy.Init(m_enemyStatsSO[0]);
+				enemyHealth.Init(m_healthStats[0]);
 			}
 			else if (randNum >= 5 && randNum < 8)
 			{
 				basicEnemy.Init(m_enemyStatsSO[1]);
+				enemyHealth.Init(m_healthStats[1]);
 			}
 			else if (randNum >= 8 && randNum <= 9)
 			{
 				basicEnemy.Init(m_enemyStatsSO[2]);
+				enemyHealth.Init(m_healthStats[2]);
 			}
 
             newEnemy?.Invoke(enemyBase);

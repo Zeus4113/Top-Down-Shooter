@@ -31,7 +31,7 @@ public class EliteEnemy : MonoBehaviour, INavigable
     {
         m_firePos = transform.GetChild(0);
         m_healthComponent = GetComponent<Health>();
-        m_healthComponent.Init();
+        //m_healthComponent.Init();
         m_currentState = state.wandering;
         m_newPosition = FindNewPatrolPosition();
         m_defaultSpeed = m_movementSpeed;

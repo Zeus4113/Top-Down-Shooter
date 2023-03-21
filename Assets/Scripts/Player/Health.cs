@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float m_maxHealth;
+    //[SerializeField] private float m_maxHealth;
     [SerializeField] private GameObject m_firePrefab;
     [SerializeField] private GameObject m_scorePuddle;
-	[SerializeField] private HealthStatsSO m_healthStats;
 
-    //[SerializeField] private bool m_fireResistance;
-    //[SerializeField] private bool m_acidResistance;
-    //[SerializeField] private bool m_electricalResistance;
 
-    private bool m_isIgnited;
+	//[SerializeField] private bool m_fireResistance;
+	//[SerializeField] private bool m_acidResistance;
+	//[SerializeField] private bool m_electricalResistance;
+
+	private HealthStatsSO m_healthStats;
+	private bool m_isIgnited;
     private GameObject myFire;
     private float m_currentHealth;
     private ParticleSystem m_healParticle;
@@ -27,11 +28,12 @@ public class Health : MonoBehaviour
     public delegate void HealthChange(float health);
     public static HealthChange myHealthChange;
 
-    public void Init()
+    public void Init(HealthStatsSO myHealthStats)
     {
+		m_healthStats = myHealthStats;
         m_healParticle = GetComponentInChildren<ParticleSystem>();
         m_healParticle.Stop();
-        m_currentHealth = m_maxHealth;
+        m_currentHealth = m_healthStats.m_maxHealth;
         myHealthPickup = HealthPickup;
     }
 
@@ -47,20 +49,29 @@ public class Health : MonoBehaviour
             m_healParticle.Play();    
         }
         m_currentHealth += health;
-        UpdateIfPlayer();
-    }
+		if (gameObject != null && gameObject.CompareTag("Player"))
+		{
+			UpdateIfPlayer();
+		}
+	}
 
     public void Damage(float damage)
     {
         m_currentHealth -= damage;
-        UpdateIfPlayer();
-    }
+		if (gameObject != null && gameObject.CompareTag("Player"))
+		{
+			UpdateIfPlayer();
+		}
+	}
 
     public void SetHealth(float health)
     {
         m_currentHealth = health;
-        UpdateIfPlayer();
-    }
+		if (gameObject != null && gameObject.CompareTag("Player"))
+		{
+			UpdateIfPlayer();
+		}
+	}
 
     public float GetHealth()
     {
@@ -69,7 +80,7 @@ public class Health : MonoBehaviour
 
     public float GetMaxHealth()
     {
-        return m_maxHealth;
+        return m_healthStats.m_maxHealth;
     }
 
     public bool IsAlive()
@@ -96,8 +107,9 @@ public class Health : MonoBehaviour
 
     private void UpdateIfPlayer()
     {
-        if (this.gameObject == null) return;
-        if (this.gameObject.CompareTag("Player"))
+        if (gameObject == null) return;
+
+        if (gameObject.CompareTag("Player"))
         {
             myHealthChange?.Invoke(m_currentHealth);
         }
@@ -109,33 +121,17 @@ public class Health : MonoBehaviour
     {
         if (gameObject.CompareTag("Player"))
         {
-            m_currentHealth += (m_maxHealth / 2);
-            if (m_maxHealth > m_currentHealth)
+            m_currentHealth += (m_healthStats.m_maxHealth / 2);
+            if (m_healthStats.m_maxHealth > m_currentHealth)
             {
-                m_currentHealth = m_maxHealth;
+                m_currentHealth = m_healthStats.m_maxHealth;
             }
         }
     }
 
     public DamageType CheckResistance()
     {
-		/*
-        if (m_fireResistance)
-        {
-            Debug.Log("Is Fire Resistant");
-            return DamageType.fire;
-        }
-        else if (m_acidResistance)
-        {
-            return DamageType.acid;
-        }
-        else if (m_electricalResistance)
-        {
-            return DamageType.lightning;
-        }
-		*/
-
-        return DamageType.none;
+        return m_healthStats.m_damageType;
     }
 
 }

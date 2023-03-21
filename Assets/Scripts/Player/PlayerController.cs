@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_maxStamina;
     [SerializeField] private float m_sprintSpeed;
     [SerializeField] private float m_walkSpeed;
+	[SerializeField] private HealthStatsSO m_healthStats;
 
     public delegate void UpdateStamina(float stamina);
     public static UpdateStamina myStaminaChange;
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_myCollider = GetComponent<Collider2D>();
         m_position = m_rigidbody.position;
-        gameObject.GetComponentInChildren<Health>().Init();
+        gameObject.GetComponentInChildren<Health>().Init(m_healthStats);
     }
 
     public void Run()
