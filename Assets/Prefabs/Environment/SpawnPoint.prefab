@@ -189,3 +189,7 @@ MonoBehaviour:
   m_spawnTime: 1
   m_spawnDelay: 2
   m_waveAmount: 3
+  m_enemyStatsSO:
+  - {fileID: 11400000, guid: 5c4de06c20ca819438fb9135457db186, type: 2}
+  - {fileID: 11400000, guid: 029d8617e66e62a4396618f57abe7f06, type: 2}
+  - {fileID: 11400000, guid: fac116ac19fc30f4e813380cf6780905, type: 2}

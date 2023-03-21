@@ -10,6 +10,7 @@ public class SpawnPoint : MonoBehaviour, IInteractable
     [SerializeField] private float m_spawnTime;
     [SerializeField] private float m_spawnDelay;
     [SerializeField] private int m_waveAmount;
+	[SerializeField] private EnemyStatsSO[] m_enemyStatsSO;
 
     private bool m_isSpawning;
     private int m_currentWave;
@@ -66,11 +67,24 @@ public class SpawnPoint : MonoBehaviour, IInteractable
             BasicEnemy basicEnemy = enemy.GetComponent<BasicEnemy>();
             INavigable enemyBase = enemy.GetComponent<INavigable>();
 
-            basicEnemy.Init();
-            newEnemy.Invoke(enemyBase);
+			int randNum = Random.Range(0, 9);
+			if (randNum >= 0 && randNum < 5)
+			{
+				basicEnemy.Init(m_enemyStatsSO[0]);
+			}
+			else if (randNum >= 5 && randNum < 8)
+			{
+				basicEnemy.Init(m_enemyStatsSO[1]);
+			}
+			else if (randNum >= 8 && randNum <= 9)
+			{
+				basicEnemy.Init(m_enemyStatsSO[2]);
+			}
+
+            newEnemy?.Invoke(enemyBase);
 
             //StoreEnemy(enemy);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
         }
 
         m_currentWave++;

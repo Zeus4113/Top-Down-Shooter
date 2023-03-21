@@ -7,9 +7,11 @@ public class Health : MonoBehaviour
     [SerializeField] private float m_maxHealth;
     [SerializeField] private GameObject m_firePrefab;
     [SerializeField] private GameObject m_scorePuddle;
-    [SerializeField] private bool m_fireResistance;
-    [SerializeField] private bool m_acidResistance;
-    [SerializeField] private bool m_electricalResistance;
+	[SerializeField] private HealthStatsSO m_healthStats;
+
+    //[SerializeField] private bool m_fireResistance;
+    //[SerializeField] private bool m_acidResistance;
+    //[SerializeField] private bool m_electricalResistance;
 
     private bool m_isIgnited;
     private GameObject myFire;
@@ -117,6 +119,7 @@ public class Health : MonoBehaviour
 
     public DamageType CheckResistance()
     {
+		/*
         if (m_fireResistance)
         {
             Debug.Log("Is Fire Resistant");
@@ -130,6 +133,7 @@ public class Health : MonoBehaviour
         {
             return DamageType.lightning;
         }
+		*/
 
         return DamageType.none;
     }
