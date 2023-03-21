@@ -4656,6 +4656,10 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 859944438164395542, guid: 6a4b9bc3c4ea78143b1cc7d545c429ba, type: 3}
+      propertyPath: m_healthStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 47a82de1b8d6d1e4098f02fddeb01138, type: 2}
+    - target: {fileID: 859944438164395542, guid: 6a4b9bc3c4ea78143b1cc7d545c429ba, type: 3}
       propertyPath: m_sprintSpeed
       value: 7
       objectReference: {fileID: 0}
