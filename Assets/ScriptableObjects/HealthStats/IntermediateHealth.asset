@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_maxHealth: 50
   m_damageType: 2
+  m_enemyDrops:
+  - {fileID: 3121472738126800010, guid: f99b3f95c4bc35a4691eb818ec6197fa, type: 3}
+  - {fileID: 6103809198303703020, guid: b6a77599c89cec047ad94a69cd675021, type: 3}
+  - {fileID: 138671396273986895, guid: 8b7d9b231f353024eb5b6c0ece363f75, type: 3}
+  m_scorePuddle: {fileID: 8597630219493614282, guid: 496a4546e2ca05b49bf66133e1b66657, type: 3}

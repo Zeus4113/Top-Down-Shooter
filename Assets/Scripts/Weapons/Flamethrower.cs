@@ -244,6 +244,7 @@ public class Flamethrower : MonoBehaviour, IShootable
     public void SetReserveAmmo(int amount)
     {
         m_reserveAmmo = amount;
-    }
+		updateAmmo?.Invoke(m_currentAmmo, m_reserveAmmo);
+	}
 
 }

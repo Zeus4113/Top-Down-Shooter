@@ -5,44 +5,57 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    static public GameManager instance;
+    static public GameManager m_instance;
 
-    private GameObject player;
-    private GameObject weaponManager;
-    private GameObject enemyManager;
-    private GameObject mainCamera;
+    private PlayerController m_player;
+    private WeaponManager m_weaponManager;
+    private EnemyManager m_enemyManager;
+    private CameraSetter m_mainCamera;
 
     private void Awake()
     {
-        instance = this;
-        mainCamera = GameObject.Find("MainCamera");
-        player = GameObject.Find("PlayerCharacter");
-        weaponManager = GameObject.Find("WeaponManager");
-        enemyManager = GameObject.Find("EnemyManager");
+		m_instance = this;
+
+		Health.myIsDead += OnDeath;
+
+		GameObject myPlayer = GameObject.Find("PlayerCharacter");
+		m_player = myPlayer.GetComponent<PlayerController>();
+
+		GameObject myWeaponManager = GameObject.Find("WeaponManager");
+		m_weaponManager = myWeaponManager.GetComponent<WeaponManager>();
+
+		GameObject myEnemyManager = GameObject.Find("EnemyManager");
+		m_enemyManager = myEnemyManager.GetComponent<EnemyManager>();
+
+		GameObject myCamera = GameObject.Find("MainCamera");
+		m_mainCamera = myCamera.GetComponent<CameraSetter>();
     }
 
     private void Start()
     {
-        player.GetComponent<PlayerController>().Init();
-        mainCamera.GetComponent<CameraSetter>().Init();
-        weaponManager.GetComponent<WeaponManager>().Init();
-        enemyManager.GetComponent<EnemyManager>().Init();
+		m_player.Init();
+		m_weaponManager.Init();
+		m_enemyManager.Init();
+		m_mainCamera.Init();
     }
 
     private void Update()
     {
-        if(player != null)
-        {
-            player.GetComponent<PlayerController>().Run();
-            mainCamera.GetComponent<CameraSetter>().Run();
-            weaponManager.GetComponent<WeaponManager>().Run();
-            enemyManager.GetComponent<EnemyManager>().Run();
-        }
-        else if(player == null)
-        {
-            SceneManager.LoadScene("DeathScreen");
-            Debug.Log("DeathScreenLoaded");
-        }
+		if (m_player == null) return;
+
+		m_player?.Run();
+		m_weaponManager?.Run();
+		m_enemyManager?.Run();
+		m_mainCamera?.Run();
 
     }
+
+	private void OnDeath(GameObject myObject)
+	{
+		if (myObject.CompareTag("Player"))
+		{
+			SceneManager.LoadScene("DeathScreen");
+			Debug.Log("DeathScreenLoaded");
+		}
+	}
 }

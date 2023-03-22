@@ -4955,6 +4955,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_attackForce: 10000
   m_attackCooldown: 2
+  m_scorePuddle: {fileID: 8597630219493614282, guid: 496a4546e2ca05b49bf66133e1b66657, type: 3}
 --- !u!114 &286414293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4968,7 +4969,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_firePrefab: {fileID: 7723989353399453095, guid: b44064bb7e4f7ab46874fbd9f000ecf3, type: 3}
-  m_scorePuddle: {fileID: 8597630219493614282, guid: 496a4546e2ca05b49bf66133e1b66657, type: 3}
 --- !u!1 &649035902306307417
 GameObject:
   m_ObjectHideFlags: 0

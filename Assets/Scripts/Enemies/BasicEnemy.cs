@@ -91,8 +91,7 @@ public class BasicEnemy : MonoBehaviour, INavigable
         }
     }
 
-
-    public void SetState(state newState)
+	public void SetState(state newState)
     {
         m_currentState = newState;
     }

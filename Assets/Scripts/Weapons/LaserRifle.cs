@@ -160,5 +160,6 @@ public class LaserRifle : MonoBehaviour, IShootable
     public void SetReserveAmmo(int amount)
     {
         reserveAmmo = amount;
-    }
+		updateAmmo?.Invoke(currentAmmo, reserveAmmo);
+	}
 }

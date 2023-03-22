@@ -4,23 +4,13 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    //[SerializeField] private float m_maxHealth;
     [SerializeField] private GameObject m_firePrefab;
-    [SerializeField] private GameObject m_scorePuddle;
-
-
-	//[SerializeField] private bool m_fireResistance;
-	//[SerializeField] private bool m_acidResistance;
-	//[SerializeField] private bool m_electricalResistance;
 
 	private HealthStatsSO m_healthStats;
 	private bool m_isIgnited;
     private GameObject myFire;
     private float m_currentHealth;
     private ParticleSystem m_healParticle;
-
-    public delegate void healthPickup();
-    public static healthPickup myHealthPickup;
 
     public delegate void isDead(GameObject deadObject);
     public static isDead myIsDead;
@@ -34,7 +24,6 @@ public class Health : MonoBehaviour
         m_healParticle = GetComponentInChildren<ParticleSystem>();
         m_healParticle.Stop();
         m_currentHealth = m_healthStats.m_maxHealth;
-        myHealthPickup = HealthPickup;
     }
 
     public void Run()
@@ -49,28 +38,24 @@ public class Health : MonoBehaviour
             m_healParticle.Play();    
         }
         m_currentHealth += health;
-		if (gameObject != null && gameObject.CompareTag("Player"))
+
+		if(m_currentHealth > m_healthStats.m_maxHealth)
 		{
-			UpdateIfPlayer();
+			m_currentHealth = m_healthStats.m_maxHealth;
 		}
+		UpdateIfPlayer();
 	}
 
     public void Damage(float damage)
     {
         m_currentHealth -= damage;
-		if (gameObject != null && gameObject.CompareTag("Player"))
-		{
-			UpdateIfPlayer();
-		}
+		UpdateIfPlayer();
 	}
 
     public void SetHealth(float health)
     {
         m_currentHealth = health;
-		if (gameObject != null && gameObject.CompareTag("Player"))
-		{
-			UpdateIfPlayer();
-		}
+		UpdateIfPlayer();
 	}
 
     public float GetHealth()
@@ -87,9 +72,27 @@ public class Health : MonoBehaviour
     {
         if (m_currentHealth <= 0)
         {
+			if (gameObject.CompareTag("Enemy"))
+			{
+				Instantiate(m_healthStats.m_scorePuddle, transform.position, Quaternion.identity);
+
+				int randNum = Random.Range(1, 4);
+				Debug.Log(randNum);
+				switch (randNum)
+				{
+					case > 0 and < 3:
+						Instantiate(m_healthStats.m_scorePuddle, transform.position, Quaternion.identity);
+						break;
+
+					case 3:
+						Instantiate(m_healthStats.ReturnRandomDrop(), transform.position, Quaternion.identity);
+						break;
+				}
+				Destroy(gameObject);
+			}
+
             myIsDead.Invoke(this.gameObject);
-            Instantiate(m_scorePuddle, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+
             return false;
         }
         return true;
@@ -112,20 +115,6 @@ public class Health : MonoBehaviour
         if (gameObject.CompareTag("Player"))
         {
             myHealthChange?.Invoke(m_currentHealth);
-        }
-    }
-
-    // Health Pickup
-
-    public void HealthPickup()
-    {
-        if (gameObject.CompareTag("Player"))
-        {
-            m_currentHealth += (m_healthStats.m_maxHealth / 2);
-            if (m_healthStats.m_maxHealth > m_currentHealth)
-            {
-                m_currentHealth = m_healthStats.m_maxHealth;
-            }
         }
     }
 
