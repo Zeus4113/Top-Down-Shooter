@@ -7,6 +7,7 @@ public class ScoreDepot : MonoBehaviour
     [SerializeField] private int m_maxScore;
     [SerializeField] private GameObject m_scoreUI;
     [SerializeField] private EnemySpawnManager m_spawnManager;
+	[SerializeField] private GameObject m_door;
 
 
     private int m_currentScoreDeposited;
@@ -86,6 +87,6 @@ public class ScoreDepot : MonoBehaviour
     {
         m_isComplete = true;
         m_spawnManager.SetActive(false);
-
+		m_door?.GetComponent<Door>().Unlock();
     }
 }
