@@ -12,6 +12,7 @@ public class CameraSetter : MonoBehaviour
 
     public void Init()
     {
+		/*
         m_player = GameObject.Find("PlayerCharacter");
 
         StaminaBar myStaminaBar = m_playerStaminaHUD.GetComponent<StaminaBar>();
@@ -19,6 +20,7 @@ public class CameraSetter : MonoBehaviour
 
         HealthBar myHealthBar = m_playerHealthHUD.GetComponent<HealthBar>();
         myHealthBar.Init();
+		*/
 
     }
 
@@ -26,4 +28,14 @@ public class CameraSetter : MonoBehaviour
     {
         gameObject.transform.position = m_player.transform.position + new Vector3(0f, 0f, -distance);
     }
+
+	public void SetUpHUD(GameObject playerHealth, GameObject playerStamina)
+	{
+
+		StaminaBar myStaminaBar = playerStamina.GetComponent<StaminaBar>();
+		myStaminaBar.Init();
+
+		HealthBar myHealthBar = playerHealth.GetComponent<HealthBar>();
+		myHealthBar.Init();
+	}
 }

@@ -28,8 +28,6 @@ public class WeaponManager : MonoBehaviour
     {
         player = GameObject.Find("PlayerCharacter");
         mountPos = player.transform.Find("mountPos");
-        m_ammoText = m_ammoCounter.GetComponent<TMPro.TMP_Text>();
-        m_weaponText = m_weaponName.GetComponent<TMPro.TMP_Text>();
 
         shotgunAmmo = ShotgunAmmoPickup;
         rocketAmmo = RocketAmmoPickup;
@@ -89,6 +87,12 @@ public class WeaponManager : MonoBehaviour
             updateCount++;
         }
     }
+
+	public void SetUpHUD(GameObject ammoCounter, GameObject weaponName)
+	{
+		m_ammoText = ammoCounter.GetComponent<TMPro.TMP_Text>();
+		m_weaponText = weaponName.GetComponent<TMPro.TMP_Text>();
+	}
 
     private void UpdateWeaponNameHUD()
     {

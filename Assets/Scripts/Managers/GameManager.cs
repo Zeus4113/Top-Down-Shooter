@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     {
 		m_instance = this;
 
+		SceneManager.sceneLoaded += OnSceneLoaded;
+
 		Health.myIsDead += OnDeath;
 
 		GameObject myPlayer = GameObject.Find("PlayerCharacter");
@@ -31,13 +33,40 @@ public class GameManager : MonoBehaviour
 		m_mainCamera = myCamera.GetComponent<CameraSetter>();
     }
 
+	
+	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		if(mode == LoadSceneMode.Additive)
+		{
+			switch (scene.name)
+			{
+				case "HUDScene":
+
+					Debug.Log("HUD Scene Loaded");
+					// Grab and Setup HUD elements (Health / Stamina)
+					GameObject myHealthHUD = GameObject.Find("HealthFillBar");
+					GameObject myStaminaHUD = GameObject.Find("StaminaFillBar");
+					m_mainCamera?.SetUpHUD(myHealthHUD, myStaminaHUD);
+
+					// Grab and Setup HUD elements (Ammo / Weapons)
+					GameObject myAmmoCount = GameObject.Find("AmmoCount");
+					GameObject myWeaponName = GameObject.Find("WeaponName");
+					m_weaponManager?.SetUpHUD(myAmmoCount, myWeaponName);
+					break;
+			}
+		}
+	}
+	
+
     private void Start()
     {
+		SceneManager.LoadScene("HUDScene", LoadSceneMode.Additive);
+
 		m_player.Init();
 		m_weaponManager.Init();
 		m_enemyManager.Init();
 		m_mainCamera.Init();
-    }
+	}
 
     private void Update()
     {
