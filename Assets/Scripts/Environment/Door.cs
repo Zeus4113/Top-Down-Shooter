@@ -8,21 +8,26 @@ public class Door : MonoBehaviour, IInteractable
     private SpriteRenderer m_Renderer;
     private bool m_isActive;
 
-    public void Init()
+    public void Start()
     {
         m_Renderer = GetComponent<SpriteRenderer>();
-        Deactivate();
-    }
+		Debug.Log("Detected");
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision == null) return;
+	}
 
-        if (m_isActive)
-        {
-            SceneManager.LoadSceneAsync("WinScene");
-        }
-    }
+	private IEnumerable Open()
+	{
+		float alpha = m_Renderer.material.color.a;
+		Debug.Log("Detected1");
+		for(int i = 0; i < 10; i++)
+		{
+			alpha *= i / 10;
+			yield return new WaitForSeconds(0.25f);
+		}
+
+		
+		yield return null;
+	}
 
     public void Activate()
     {
