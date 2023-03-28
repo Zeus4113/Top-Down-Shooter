@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private WeaponManager m_weaponManager;
     private EnemyManager m_enemyManager;
     private CameraSetter m_mainCamera;
+	private List<LevelManager> m_levelManagers;
 
     private void Awake()
     {
@@ -18,6 +19,12 @@ public class GameManager : MonoBehaviour
 
 		Health.myIsDead += OnDeath;
 
+		SceneManager.sceneLoaded += OnSceneLoaded;
+		m_levelManagers = new List<LevelManager>();
+
+		SceneManager.LoadScene("HeaterLevel", LoadSceneMode.Additive);
+
+		// Cache Core References
 		GameObject myPlayer = GameObject.Find("PlayerCharacter");
 		m_player = myPlayer.GetComponent<PlayerController>();
 
@@ -31,11 +38,18 @@ public class GameManager : MonoBehaviour
 		m_mainCamera = myCamera.GetComponent<CameraSetter>();
     }
 
+	private void OnSceneLoaded(Scene myScene, LoadSceneMode myMode)
+	{
+		m_levelManagers.Add(FindObjectOfType<LevelManager>());
+		Debug.Log(m_levelManagers[m_levelManagers.Count - 1], gameObject);
+	}
+
     private void Start()
     {
+
 		m_player.Init();
 		m_weaponManager.Init();
-		m_enemyManager.Init();
+		m_enemyManager.Init(m_levelManagers[0].GetSpawnManagers(), m_levelManagers[0].GetLevelAreas());
 		m_mainCamera.Init();
     }
 

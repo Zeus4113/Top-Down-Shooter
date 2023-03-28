@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] m_levelAreas;
-    [SerializeField] private EnemySpawnManager[] m_spawnManagers;
+    //[SerializeField] private LevelArea[] m_levelAreas;
+    //[SerializeField] private EnemySpawnManager[] m_spawnManagers;
 
     private List<INavigable> m_enemies;
     private List<SpawnPoint> m_enemySpawns;
+	[SerializeField] private List<EnemySpawnManager> m_enemySpawnManagers;
+	[SerializeField] private List<LevelArea> m_levelAreas;
 
-    public void Init()
+    public void Init(List<EnemySpawnManager> mySpawnManagers, List<LevelArea> myLevelAreas)
     {
+		m_enemySpawnManagers = mySpawnManagers;
+		m_levelAreas = myLevelAreas;
+
         m_enemies = new List<INavigable>();
         m_enemySpawns = new List<SpawnPoint>();
 
@@ -20,12 +25,12 @@ public class EnemyManager : MonoBehaviour
         Health.myIsDead += RemoveEnemy;
         SpawnPoint.removeSpawn += RemoveEnemySpawnPoint;
 
-        for (int i = 0; i < m_spawnManagers.Length; i++)
+        for (int i = 0; i < m_enemySpawnManagers.Count; i++)
         {
-            m_spawnManagers[i].Init();
+			m_enemySpawnManagers[i].Init();
         }
 
-        for (int i = 0; i < m_levelAreas.Length; i++)
+        for (int i = 0; i < m_levelAreas.Count; i++)
         {
             LevelArea myLevelArea = m_levelAreas[i].GetComponent<LevelArea>();
 
@@ -37,8 +42,8 @@ public class EnemyManager : MonoBehaviour
     public void Run()
     {
         //LevelAreaRun();
-        EnemiesRun();
-        SpawnPointRun();
+        //EnemiesRun();
+        //SpawnPointRun();
     }
 
     public void AddEnemy(INavigable newEnemy)
@@ -84,4 +89,21 @@ public class EnemyManager : MonoBehaviour
             m_enemySpawns[i].Run();
         }
     }
+
+	public void AddLevelAreas(LevelArea[] myLevelAreas)
+	{
+		for(int i = 0; myLevelAreas.Length > i; i++)
+		{
+			m_levelAreas.Add(myLevelAreas[i]);
+		}
+	}
+
+	public void AddSpawnManagers(EnemySpawnManager[] mySpawnAreas)
+	{
+		for (int i = 0; mySpawnAreas.Length > i; i++)
+		{
+			m_enemySpawnManagers.Add(mySpawnAreas[i]);
+		}
+	}
 }
+
