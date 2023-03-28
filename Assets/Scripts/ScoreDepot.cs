@@ -27,7 +27,7 @@ public class ScoreDepot : MonoBehaviour
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_spriteRenderer.size = new Vector2(0.1f, 0.1f);
         m_textMeshPro = m_scoreUI.GetComponent<TMPro.TMP_Text>();
-        m_textMeshPro.text = (m_currentScoreDeposited.ToString() + " / " + m_maxScore.ToString());
+        //m_textMeshPro.text = (m_currentScoreDeposited.ToString() + " / " + m_maxScore.ToString());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -54,7 +54,8 @@ public class ScoreDepot : MonoBehaviour
         {
             m_playerPresent = false;
             StopAllCoroutines();
-        }
+			m_textMeshPro.text = ("N/A");
+		}
     }
 
     private IEnumerator DepositScore(int currentScore)
