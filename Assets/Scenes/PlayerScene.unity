@@ -2605,8 +2605,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc61a864ffca53d4980ba8d200ab5858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   m_enemySpawnManagers: []
   m_levelAreas: []
+=======
+  m_levelAreas: []
+  m_spawnManagers: []
+>>>>>>> Stashed changes
 --- !u!1 &2121430796
 GameObject:
   m_ObjectHideFlags: 0
