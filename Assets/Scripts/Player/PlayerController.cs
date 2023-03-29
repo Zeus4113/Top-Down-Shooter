@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private float m_movementSpeed;
     private float m_currentStamina;
     private bool m_isSprinting;
+	private float m_currentScore;
 
     [SerializeField] private float m_maxStamina;
     [SerializeField] private float m_sprintSpeed;
@@ -22,13 +23,16 @@ public class PlayerController : MonoBehaviour
     public void Init()
     {
         m_isSprinting = false;
+		m_currentScore = 0;
         m_currentStamina = m_maxStamina;
         m_movementSpeed = m_walkSpeed;
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_myCollider = GetComponent<Collider2D>();
         m_position = m_rigidbody.position;
         gameObject.GetComponentInChildren<Health>().Init(m_healthStats);
-    }
+		ScoreParticle.OnParticlePickup += SetScore;
+		ScoreDepot.depositTick += SetScore;
+	}
 
     public void Run()
     {
@@ -36,6 +40,16 @@ public class PlayerController : MonoBehaviour
         Movement();
         Sprint();
     }
+
+	public float GetScore()
+	{
+		return m_currentScore;
+	}
+
+	public void SetScore(float amount)
+	{
+		m_currentScore += amount;
+	}
 
     private void Movement()
     {

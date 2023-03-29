@@ -14,21 +14,35 @@ public class ScoreDepot : MonoBehaviour
     private bool m_isComplete;
     private bool m_playerPresent;
     private SpriteRenderer m_spriteRenderer;
-    private TMPro.TMP_Text m_textMeshPro;
 
-    public delegate void ScoreDeposited(int amount);
+    public delegate void ScoreDeposited(float amount);
     public static ScoreDeposited depositTick;
 
-    public void Init()
-    {
-        m_isComplete = false;
-        m_playerPresent = false;
-        m_currentScoreDeposited = 0;
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
-        m_spriteRenderer.size = new Vector2(0.1f, 0.1f);
-        m_textMeshPro = m_scoreUI.GetComponent<TMPro.TMP_Text>();
-        //m_textMeshPro.text = (m_currentScoreDeposited.ToString() + " / " + m_maxScore.ToString());
-    }
+	public delegate void UpdateDeposit(int maxAmount, int currentAmount);
+	public static UpdateDeposit setupHUD;
+
+	public delegate void ResetDeposit();
+	public static ResetDeposit resetHUD;
+
+	public void Init()
+	{
+		m_isComplete = false;
+		m_playerPresent = false;
+		m_currentScoreDeposited = 0;
+		m_spriteRenderer = GetComponent<SpriteRenderer>();
+		m_spriteRenderer.size = new Vector2(0.1f, 0.1f);
+
+		SetupHUD(true);
+
+		//m_textMeshPro = m_scoreUI.GetComponent<TMPro.TMP_Text>();
+		//m_textMeshPro.text = (m_currentScoreDeposited.ToString() + " / " + m_maxScore.ToString());
+	}
+
+	public void SetupHUD(bool isTrue)
+	{
+		if (isTrue)	setupHUD?.Invoke(m_maxScore, m_currentScoreDeposited);
+		else resetHUD?.Invoke();
+	}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -39,8 +53,9 @@ public class ScoreDepot : MonoBehaviour
         if (myObject.CompareTag("Player"))
         {
             m_playerPresent = true;
-            ScoreTracker scoreTracker = myObject.GetComponent<ScoreTracker>();
-            StartCoroutine(DepositScore(scoreTracker.GetScore()));
+            PlayerController playerRef = myObject.GetComponent<PlayerController>();
+            StartCoroutine(DepositScore(playerRef.GetScore()));
+			Debug.Log(playerRef.GetScore());
         }
     }
 
@@ -54,21 +69,19 @@ public class ScoreDepot : MonoBehaviour
         {
             m_playerPresent = false;
             StopAllCoroutines();
-			m_textMeshPro.text = ("N/A");
 		}
     }
 
-    private IEnumerator DepositScore(int currentScore)
+    private IEnumerator DepositScore(float currentScore)
     {
         while (m_playerPresent && !m_isComplete)
         {
             for(int i = 0; i < currentScore; i++)
             {
                 m_currentScoreDeposited++;
-                m_textMeshPro.text = (m_currentScoreDeposited.ToString() + " / " + m_maxScore.ToString());
-                depositTick?.Invoke(-1);
+				setupHUD?.Invoke(m_maxScore, m_currentScoreDeposited);
+				depositTick?.Invoke(-1);
                 m_spriteRenderer.size = new Vector2(m_currentScoreDeposited * 0.004f, m_currentScoreDeposited * 0.004f);
-
                 yield return new WaitForSeconds(0.04f);
 
                 if(m_currentScoreDeposited >= m_maxScore)

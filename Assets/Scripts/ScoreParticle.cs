@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ScoreParticle : MonoBehaviour
 {
-    [SerializeField] private int m_scorePerParticle;
+    [SerializeField] private float m_scorePerParticle;
 
     private ParticleSystem m_mySystem;
     private List<ParticleSystem.Particle> m_particles;
     private GameObject m_playerRef;
     private ParticleSystem.TriggerModule m_myTrigger;
 
-    public delegate void ParticlePickup(int amount);
+    public delegate void ParticlePickup(float amount);
     public static ParticlePickup OnParticlePickup;
 
     private void Start()

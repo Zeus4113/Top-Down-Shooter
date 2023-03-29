@@ -6,26 +6,15 @@ public class LevelArea : MonoBehaviour
 {
     [SerializeField] private EnemySpawnManager m_spawnManager;
     [SerializeField] private ScoreDepot m_scoreDepot;
-    [SerializeField] private Heater[] m_heaters;
 
     private bool m_isPresent;
+	private bool m_areaActive;
 
-   public void Init()
-   {
-        m_isPresent = false;
-        m_spawnManager.Init();
-        m_scoreDepot.Init();
-
-        for (int i = 0; i < m_heaters.Length; i++)
-        {
-            m_heaters[i].Init();
-        }
-    }
-
-    public void Run()
+	public void Init()
     {
-
-    }
+		m_isPresent = false;
+		m_areaActive = false;
+	}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -35,9 +24,18 @@ public class LevelArea : MonoBehaviour
 
         if(myObject.tag == "Player")
         {
-            m_isPresent = true;
-            m_spawnManager.SetActive(m_isPresent);
-        }
+			m_isPresent = true;
+
+			if (!m_areaActive)
+			{
+				Debug.Log("Firing");
+				m_spawnManager.Init();
+				m_scoreDepot.Init();
+				m_spawnManager.SetActive(m_isPresent);
+				m_areaActive = true;
+			}
+			m_scoreDepot.SetupHUD(true);
+		}
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -50,6 +48,7 @@ public class LevelArea : MonoBehaviour
         {
             m_isPresent = false;
             m_spawnManager.SetActive(m_isPresent);
-        }
+			m_scoreDepot.SetupHUD(false);
+		}
     }
 }

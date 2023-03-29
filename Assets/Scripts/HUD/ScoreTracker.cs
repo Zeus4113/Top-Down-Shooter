@@ -4,27 +4,39 @@ using UnityEngine;
 
 public class ScoreTracker : MonoBehaviour
 {
-    [SerializeField] private GameObject m_scoreUI;
-
-    private int currentScore;
-    private TMPro.TMP_Text m_textMeshPro;
+    private GameObject m_currentScoreUI;
+	private GameObject m_depotScoreUI;
+    private float currentScore;
+    private TMPro.TMP_Text m_textMeshPro_1;
+	private TMPro.TMP_Text m_textMeshPro_2;
 
     private void Start()
     {
-        m_textMeshPro = m_scoreUI.GetComponent<TMPro.TMP_Text>();
+		Transform objectHolder = gameObject.transform.GetChild(1);
+		Transform objectHolder2 = gameObject.transform.GetChild(2);
 
-        ScoreDepot.depositTick += ChangeScore;
-        ScoreParticle.OnParticlePickup += ChangeScore;
+		m_textMeshPro_1 = objectHolder.GetChild(0).GetComponent<TMPro.TMP_Text>();
+		m_textMeshPro_2 = objectHolder2.GetChild(0).GetComponent<TMPro.TMP_Text>();
+
+		ScoreDepot.setupHUD += UpdateDeposit;
+        ScoreParticle.OnParticlePickup += ChangeCurrentScore;
+		ScoreDepot.depositTick += ChangeCurrentScore;
+		ScoreDepot.resetHUD += ResetDepositHUD;
     }
 
-    private void ChangeScore(int amount)
+    private void ChangeCurrentScore(float amount)
     {
-        currentScore += amount;
-        m_textMeshPro.text = currentScore.ToString();
+		currentScore += amount;
+		m_textMeshPro_1.text = currentScore.ToString();
     }
 
-    public int GetScore()
-    {
-        return currentScore;
-    }
+	public void UpdateDeposit(int maxScore, int currentScore)
+	{
+		m_textMeshPro_2.text = currentScore.ToString() + " / " + maxScore.ToString();
+	}
+
+	public void ResetDepositHUD()
+	{
+		m_textMeshPro_2.text = "N/A";
+	}
 }
