@@ -7,13 +7,14 @@ public class ScoreDepot : MonoBehaviour
     [SerializeField] private int m_maxScore;
     [SerializeField] private GameObject m_scoreUI;
     [SerializeField] private EnemySpawnManager m_spawnManager;
-	[SerializeField] private GameObject m_door;
+	[SerializeField] private GameObject[] m_doors;
 
 
     private int m_currentScoreDeposited;
     private bool m_isComplete;
     private bool m_playerPresent;
     private SpriteRenderer m_spriteRenderer;
+	private DepotTracker m_depotTracker;
 
     public delegate void ScoreDeposited(float amount);
     public static ScoreDeposited depositTick;
@@ -33,9 +34,6 @@ public class ScoreDepot : MonoBehaviour
 		m_spriteRenderer.size = new Vector2(0.1f, 0.1f);
 
 		SetupHUD(true);
-
-		//m_textMeshPro = m_scoreUI.GetComponent<TMPro.TMP_Text>();
-		//m_textMeshPro.text = (m_currentScoreDeposited.ToString() + " / " + m_maxScore.ToString());
 	}
 
 	public void SetupHUD(bool isTrue)
@@ -97,10 +95,20 @@ public class ScoreDepot : MonoBehaviour
         yield return null;
     }
 
+	public void SetDepotTracker(GameObject myObject)
+	{
+		m_depotTracker = myObject?.GetComponent<DepotTracker>();
+	}
+
     private void OnComplete()
     {
         m_isComplete = true;
         m_spawnManager.SetActive(false);
-		m_door?.GetComponent<Door>().Unlock();
+
+		for(int i = 0; i < m_doors.Length; i++)
+		{
+			m_doors[i]?.GetComponent<Door>().Unlock();
+		}
+		m_depotTracker.OnDepotCompleted(gameObject.transform);
     }
 }

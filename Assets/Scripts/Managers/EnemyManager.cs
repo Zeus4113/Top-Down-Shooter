@@ -6,7 +6,10 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] m_levelAreas;
     [SerializeField] private EnemySpawnManager[] m_spawnManagers;
+	[SerializeField] private DepotTracker m_depotTracker;
 
+
+	private List<Door> m_doorList;
     private List<INavigable> m_enemies;
     private List<SpawnPoint> m_enemySpawns;
 
@@ -14,11 +17,19 @@ public class EnemyManager : MonoBehaviour
     {
         m_enemies = new List<INavigable>();
         m_enemySpawns = new List<SpawnPoint>();
+		m_doorList = new List<Door>();
 
         EnemySpawnManager.newEnemySpawn += AddEnemySpawnPoint;
         SpawnPoint.newEnemy += AddEnemy;
         Health.myIsDead += RemoveEnemy;
         SpawnPoint.removeSpawn += RemoveEnemySpawnPoint;
+
+		m_doorList.AddRange(GameObject.FindObjectsOfType<Door>());
+
+		for(int i = 0; i < m_doorList.Count; i++)
+		{
+			m_doorList[i].Init();
+		}
 
         for (int i = 0; i < m_spawnManagers.Length; i++)
         {
@@ -32,7 +43,9 @@ public class EnemyManager : MonoBehaviour
             myLevelArea.Init();
         }
 
-    }
+		m_depotTracker.Init();
+
+	}
 
     public void Run()
     {
