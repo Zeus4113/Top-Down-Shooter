@@ -8,6 +8,7 @@ public class ScoreDepot : MonoBehaviour
     [SerializeField] private GameObject m_scoreUI;
     [SerializeField] private EnemySpawnManager m_spawnManager;
 	[SerializeField] private GameObject[] m_doors;
+	[SerializeField] private Transform[] m_wires;
 
 
     private int m_currentScoreDeposited;
@@ -109,6 +110,13 @@ public class ScoreDepot : MonoBehaviour
 		{
 			m_doors[i]?.GetComponent<Door>().Unlock();
 		}
+
+		for(int j = 0; j < m_wires.Length; j++)
+		{
+			m_wires[j].GetComponent<SpriteRenderer>().color = Color.green;
+		}
+
+
 		m_depotTracker.OnDepotCompleted(gameObject.transform);
     }
 }

@@ -11,6 +11,7 @@ public class DepotTracker : MonoBehaviour
 	private Image m_image;
 
 	[SerializeField] private Transform[] m_levelDepots;
+	[SerializeField] private Transform[] m_levelWires;
 
 	public void Init()
 	{
@@ -24,6 +25,12 @@ public class DepotTracker : MonoBehaviour
 		{
 			m_levelDepots[i].GetComponent<ScoreDepot>().SetDepotTracker(gameObject);
 		}
+
+		for (int j = 0; j < m_levelWires.Length; j++)
+		{
+			m_levelWires[j].GetComponent<SpriteRenderer>().color = Color.red;
+		}
+
 	}
 
 	public void OnDepotCompleted(Transform myObject)
