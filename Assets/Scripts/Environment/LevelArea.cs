@@ -30,11 +30,11 @@ public class LevelArea : MonoBehaviour
 			{
 				Debug.Log("Firing");
 				m_spawnManager.Init();
-				m_scoreDepot.Init();
+				m_scoreDepot?.Init();
 				m_spawnManager.SetActive(m_isPresent);
 				m_areaActive = true;
 			}
-			m_scoreDepot.SetupHUD(true);
+			m_scoreDepot?.SetupHUD(true);
 		}
     }
 
@@ -48,7 +48,7 @@ public class LevelArea : MonoBehaviour
         {
             m_isPresent = false;
             m_spawnManager.SetActive(m_isPresent);
-			m_scoreDepot.SetupHUD(false);
+			m_scoreDepot?.SetupHUD(false);
 		}
     }
 }
