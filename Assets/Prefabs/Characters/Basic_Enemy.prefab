@@ -4932,7 +4932,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -4955,7 +4955,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_attackForce: 10000
   m_attackCooldown: 2
-  m_scorePuddle: {fileID: 8597630219493614282, guid: 496a4546e2ca05b49bf66133e1b66657, type: 3}
 --- !u!114 &286414293
 MonoBehaviour:
   m_ObjectHideFlags: 0

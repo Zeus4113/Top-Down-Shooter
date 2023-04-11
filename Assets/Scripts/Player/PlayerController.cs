@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Collider2D m_myCollider;
     private Vector3 m_position;
     private float m_movementSpeed;
+	private float m_movementSpeedMultiplier;
     private float m_currentStamina;
     private bool m_isSprinting;
 	private float m_currentScore;
@@ -24,7 +25,8 @@ public class PlayerController : MonoBehaviour
     {
         m_isSprinting = false;
 		m_currentScore = 0;
-        m_currentStamina = m_maxStamina;
+		m_movementSpeedMultiplier = 1f;
+		m_currentStamina = m_maxStamina;
         m_movementSpeed = m_walkSpeed;
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_myCollider = GetComponent<Collider2D>();
@@ -53,8 +55,8 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
-        m_position.x = Input.GetAxisRaw("Horizontal") * m_movementSpeed;
-        m_position.y = Input.GetAxisRaw("Vertical") * m_movementSpeed;
+        m_position.x = Input.GetAxisRaw("Horizontal") * (m_movementSpeed * m_movementSpeedMultiplier);
+        m_position.y = Input.GetAxisRaw("Vertical") * (m_movementSpeed * m_movementSpeedMultiplier);
         m_rigidbody.velocity = m_position;
     }
 
@@ -115,5 +117,10 @@ public class PlayerController : MonoBehaviour
     {
         return m_maxStamina;
     }
+	
+	public void SetSpeedMultiplier(float newMultiplier)
+	{
+		m_movementSpeedMultiplier = newMultiplier;
+	}
 }
 

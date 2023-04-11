@@ -40,7 +40,12 @@ public class EnemySpawnManager : MonoBehaviour
         else if (!m_isActive)
         {
             StopAllCoroutines();
-			StartCoroutine(ScalePointOpacity());
+
+
+			for(int i = 0; i < m_spawnPointTransforms.Count; i++)
+			{
+				StartCoroutine(ScalePointOpacity(m_spawnPointTransforms[i].gameObject.GetComponent<SpriteRenderer>()));
+			}
 		}
     }
 
@@ -80,21 +85,18 @@ public class EnemySpawnManager : MonoBehaviour
         Destroy(spawnPoint);
     }
 
-	private IEnumerator ScalePointOpacity()
+	private IEnumerator ScalePointOpacity(SpriteRenderer myRenderer)
 	{
-
-		for (int i = 0; i < m_spawnPointTransforms.Count; i++)
+		for (int j = 8; j >= 0; j--)
 		{
-			SpriteRenderer myRenderer = m_spawnPointTransforms[i].GetComponent<SpriteRenderer>();
-
-			for(int j = 8; j >= 0; j--)
-			{
-				myRenderer.color = new Color(myRenderer.color.r, myRenderer.color.g, myRenderer.color.b, j * 0.1f);
-				Debug.Log(j);
-				yield return new WaitForSeconds(0.1f);
-			}
+			myRenderer.color = new Color(myRenderer.color.r, myRenderer.color.g, myRenderer.color.b, j * 0.1f);
+			yield return new WaitForSeconds(0.2f);
 		}
-
 		yield return null;
+	}
+
+	public bool GetActive()
+	{
+		return m_isActive;
 	}
 }

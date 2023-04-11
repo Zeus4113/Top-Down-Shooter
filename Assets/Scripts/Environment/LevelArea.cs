@@ -47,7 +47,11 @@ public class LevelArea : MonoBehaviour
         if (myObject.tag == "Player")
         {
             m_isPresent = false;
-            m_spawnManager.SetActive(m_isPresent);
+
+			if (m_spawnManager.GetActive())
+			{
+				m_spawnManager.SetActive(m_isPresent);
+			}
 			m_scoreDepot?.SetupHUD(false);
 		}
     }
