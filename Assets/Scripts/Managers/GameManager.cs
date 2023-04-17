@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
 			PlayerController playerController = myObject.GetComponent<PlayerController>();
 			playerController.SetDisableInput(true);
 
-			SceneManager.LoadScene("DeathScreen", LoadSceneMode.Additive);
+			SceneManager.LoadScene("DeathScreen");
 			Debug.Log("DeathScreenLoaded");
 		}
 	}
