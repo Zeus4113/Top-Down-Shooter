@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private float m_currentStamina;
     private bool m_isSprinting;
 	private float m_currentScore;
+	private bool m_isInputDisabled;
 
     [SerializeField] private float m_maxStamina;
     [SerializeField] private float m_sprintSpeed;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     {
         m_isSprinting = false;
 		m_currentScore = 0;
+		m_isInputDisabled = false;
 		m_movementSpeedMultiplier = 1f;
 		m_currentStamina = m_maxStamina;
         m_movementSpeed = m_walkSpeed;
@@ -53,32 +55,43 @@ public class PlayerController : MonoBehaviour
 		m_currentScore += amount;
 	}
 
+	public void SetDisableInput(bool isTrue)
+	{
+		m_isInputDisabled = isTrue;
+	}
+
     private void Movement()
     {
-        m_position.x = Input.GetAxisRaw("Horizontal") * (m_movementSpeed * m_movementSpeedMultiplier);
-        m_position.y = Input.GetAxisRaw("Vertical") * (m_movementSpeed * m_movementSpeedMultiplier);
-        m_rigidbody.velocity = m_position;
+		if (!m_isInputDisabled)
+		{
+			m_position.x = Input.GetAxisRaw("Horizontal") * (m_movementSpeed * m_movementSpeedMultiplier);
+			m_position.y = Input.GetAxisRaw("Vertical") * (m_movementSpeed * m_movementSpeedMultiplier);
+			m_rigidbody.velocity = m_position;
+		}
     }
 
     private void Sprint()
     {
-        if(m_currentStamina > 0)
-        {
-            if (Input.GetButtonDown("Sprint"))
-            {
-                m_movementSpeed = m_sprintSpeed;
-                m_isSprinting = true;
-                StartCoroutine(StaminaChange());
+		if (!m_isInputDisabled)
+		{
+			if (m_currentStamina > 0)
+			{
+				if (Input.GetButtonDown("Sprint"))
+				{
+					m_movementSpeed = m_sprintSpeed;
+					m_isSprinting = true;
+					StartCoroutine(StaminaChange());
 
 
-            }
-            else if (Input.GetButtonUp("Sprint"))
-            {
-                m_movementSpeed = m_walkSpeed;
-                m_isSprinting = false;
+				}
+				else if (Input.GetButtonUp("Sprint"))
+				{
+					m_movementSpeed = m_walkSpeed;
+					m_isSprinting = false;
 
-            }
-        }
+				}
+			}
+		}
     }
 
     private IEnumerator StaminaChange()

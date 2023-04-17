@@ -22,7 +22,7 @@ public class Health : MonoBehaviour
     {
 		m_healthStats = myHealthStats;
         m_healParticle = GetComponentInChildren<ParticleSystem>();
-        m_healParticle.Stop();
+        m_healParticle?.Stop();
         m_currentHealth = m_healthStats.m_maxHealth;
     }
 
@@ -35,7 +35,7 @@ public class Health : MonoBehaviour
     {
         if (!m_healParticle.isEmitting)
         {
-            m_healParticle.Play();    
+			StartCoroutine(HealingParticle()); 
         }
         m_currentHealth += health;
 
@@ -45,6 +45,16 @@ public class Health : MonoBehaviour
 		}
 		UpdateIfPlayer();
 	}
+
+	private IEnumerator HealingParticle()
+	{
+		m_healParticle?.Play();
+
+		yield return new WaitForSeconds(1f);
+
+		m_healParticle?.Stop();
+	}
+
 
     public void Damage(float damage)
     {

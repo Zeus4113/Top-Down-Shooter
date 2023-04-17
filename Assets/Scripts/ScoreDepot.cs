@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreDepot : MonoBehaviour
 {
-    [SerializeField] private int m_maxScore;
+    [SerializeField] private float m_maxScore;
     [SerializeField] private GameObject m_scoreUI;
     [SerializeField] private EnemySpawnManager m_spawnManager;
 	[SerializeField] private GameObject[] m_doors;
 	[SerializeField] private Transform[] m_wires;
 
 
-    private int m_currentScoreDeposited;
+    private float m_currentScoreDeposited;
+	private Image m_fillBar;
     private bool m_isComplete;
     private bool m_playerPresent;
     private SpriteRenderer m_spriteRenderer;
@@ -20,7 +22,7 @@ public class ScoreDepot : MonoBehaviour
     public delegate void ScoreDeposited(float amount);
     public static ScoreDeposited depositTick;
 
-	public delegate void UpdateDeposit(int maxAmount, int currentAmount);
+	public delegate void UpdateDeposit(float maxAmount, float currentAmount);
 	public static UpdateDeposit setupHUD;
 
 	public delegate void ResetDeposit();
@@ -32,7 +34,10 @@ public class ScoreDepot : MonoBehaviour
 		m_playerPresent = false;
 		m_currentScoreDeposited = 0;
 		m_spriteRenderer = GetComponent<SpriteRenderer>();
-		m_spriteRenderer.size = new Vector2(0.1f, 0.1f);
+		//m_spriteRenderer.size = new Vector2(0.1f, 0.1f);
+
+		m_fillBar = transform.GetChild(1).GetChild(1).GetComponent<Image>();
+		m_fillBar.fillAmount = 0;
 
 		SetupHUD(true);
 	}
@@ -80,7 +85,14 @@ public class ScoreDepot : MonoBehaviour
                 m_currentScoreDeposited++;
 				setupHUD?.Invoke(m_maxScore, m_currentScoreDeposited);
 				depositTick?.Invoke(-1);
-                m_spriteRenderer.size = new Vector2(m_currentScoreDeposited * 0.004f, m_currentScoreDeposited * 0.004f);
+
+
+                //m_spriteRenderer.size = new Vector2(m_currentScoreDeposited * 0.004f, m_currentScoreDeposited * 0.004f);
+				m_fillBar.fillAmount = m_currentScoreDeposited / m_maxScore;
+				Debug.Log("Current Score = " + m_currentScoreDeposited);
+				Debug.Log("Max Score = " + m_maxScore);
+
+
                 yield return new WaitForSeconds(0.04f);
 
                 if(m_currentScoreDeposited >= m_maxScore)

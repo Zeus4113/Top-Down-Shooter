@@ -52,9 +52,12 @@ public class GameManager : MonoBehaviour
 
 	private void OnDeath(GameObject myObject)
 	{
-		if (myObject.CompareTag("Player"))
+		if (myObject?.GetComponent<PlayerController>())
 		{
-			SceneManager.LoadScene("DeathScreen");
+			PlayerController playerController = myObject.GetComponent<PlayerController>();
+			playerController.SetDisableInput(true);
+
+			SceneManager.LoadScene("DeathScreen", LoadSceneMode.Additive);
 			Debug.Log("DeathScreenLoaded");
 		}
 	}

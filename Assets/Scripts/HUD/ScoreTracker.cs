@@ -30,7 +30,7 @@ public class ScoreTracker : MonoBehaviour
 		m_textMeshPro_1.text = currentScore.ToString();
     }
 
-	public void UpdateDeposit(int maxScore, int currentScore)
+	public void UpdateDeposit(float maxScore, float currentScore)
 	{
 		m_textMeshPro_2.text = currentScore.ToString() + " / " + maxScore.ToString();
 	}
