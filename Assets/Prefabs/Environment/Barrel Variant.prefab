@@ -86,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8851271631920141247, guid: a4120873b1faf1b44b9f47277354a3f7, type: 3}
       propertyPath: m_Name
-      value: Barrel
+      value: Barrel Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects:
@@ -99,6 +99,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1897519522070786750, guid: a4120873b1faf1b44b9f47277354a3f7, type: 3}
   m_PrefabInstance: {fileID: 241685686863919816}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8758563929758001527 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8851271631920141247, guid: a4120873b1faf1b44b9f47277354a3f7, type: 3}
+  m_PrefabInstance: {fileID: 241685686863919816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &-49859416644447458
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8758563929758001527}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 2
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &241685688542750099
 PrefabInstance:
   m_ObjectHideFlags: 0

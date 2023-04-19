@@ -104,6 +104,11 @@ public class LaserRifle : MonoBehaviour, IShootable
                             break;
                     }
                 }
+				else if(myObject.GetComponent<TeslaCoil>() != null) 
+				{
+					TeslaCoil myCoil = myObject.GetComponent<TeslaCoil>();
+					myCoil.Electrocute();
+				}
             }
             currentAmmo--;
         updateAmmo?.Invoke(currentAmmo, reserveAmmo);
