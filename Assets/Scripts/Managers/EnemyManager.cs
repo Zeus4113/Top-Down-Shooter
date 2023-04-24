@@ -23,7 +23,8 @@ public class EnemyManager : MonoBehaviour
         SpawnPoint.newEnemy += AddEnemy;
         Health.myIsDead += RemoveEnemy;
         SpawnPoint.removeSpawn += RemoveEnemySpawnPoint;
-		Health.myIsDead += ClearEnemies;
+		//Health.myIsDead += ClearEnemies;
+		//Health.myIsDead += ClearSpawnPoints;
 
 		m_doorList.AddRange(GameObject.FindObjectsOfType<Door>());
 
@@ -55,7 +56,29 @@ public class EnemyManager : MonoBehaviour
         SpawnPointRun();
     }
 
-    public void AddEnemy(INavigable newEnemy)
+	public void RemoveAllEnemies()
+	{
+		for(int i = 0; i < m_enemies.Count; i++)
+		{
+			GameObject myObject = m_enemies[i].GetGameObject();
+			m_enemies[i] = null;
+			Destroy(myObject);
+		}
+		m_enemies.Clear();
+	}
+
+	public void RemoveAllSpawns()
+	{
+		for (int i = 0; i < m_enemySpawns.Count; i++)
+		{
+			GameObject myObject = m_enemySpawns[i].gameObject;
+			m_enemySpawns[i] = null;
+			Destroy(myObject);
+		}
+		m_enemySpawns.Clear();
+	}
+
+	public void AddEnemy(INavigable newEnemy)
     {
         m_enemies.Add(newEnemy);
     }
@@ -69,14 +92,6 @@ public class EnemyManager : MonoBehaviour
         m_enemies.Remove(myEnemy);
     }
 
-	public void ClearEnemies(GameObject dead)
-	{
-		if (dead?.GetComponent<PlayerController>())
-		{
-			m_enemies.Clear();
-		}
-	}
-
     public void AddEnemySpawnPoint(SpawnPoint newEnemySpawn)
     {
         m_enemySpawns.Add(newEnemySpawn);
@@ -89,11 +104,14 @@ public class EnemyManager : MonoBehaviour
 
     private void EnemiesRun()
     {
-        if (m_enemies.Count == 0) return;
+        if (m_enemies.Count <= 0) return;
 
         for(int i = 0; i < m_enemies.Count; i++)
         {
-            m_enemies[i].Run();
+			if (m_enemies[i] != null)
+			{
+				m_enemies[i].Run();
+			}
         }
     }
 
@@ -103,7 +121,10 @@ public class EnemyManager : MonoBehaviour
 
         for (int i = 0; i < m_enemySpawns.Count; i++)
         {
-            m_enemySpawns[i].Run();
+			if(m_enemySpawns[i] != null)
+			{
+				m_enemySpawns[i].Run();
+			}
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EliteEnemy : MonoBehaviour, INavigable
+public class EliteEnemy : MonoBehaviour
 {
 
     // Private Member Variables

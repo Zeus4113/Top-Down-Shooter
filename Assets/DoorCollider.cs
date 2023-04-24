@@ -8,6 +8,11 @@ public class DoorCollider : MonoBehaviour
 
 	private bool m_hasTriggered;
 
+	public void ResetTrigger()
+	{
+		m_hasTriggered = false;
+	}
+
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (m_hasTriggered) return;

@@ -16,6 +16,18 @@ public class LevelArea : MonoBehaviour
 		m_areaActive = false;
 	}
 
+	public void ResetArea()
+	{
+		m_spawnManager.Init();
+		m_scoreDepot.Init();
+		Init();
+	}
+
+	public void AreaComplete()
+	{
+		m_spawnManager.OnComplete();
+	}
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other == null) return;

@@ -12,6 +12,7 @@ public class EnemySpawnManager : MonoBehaviour
     // Private Variables
     private List<Transform> m_spawnPointTransforms;
     private bool m_isActive;
+	private int m_completedWaves;
 
     // Events
     public delegate void EnemySpawn(SpawnPoint spawnPoint);
@@ -20,11 +21,17 @@ public class EnemySpawnManager : MonoBehaviour
     public void Init()
     {
         m_spawnPointTransforms = new List<Transform>();
+		m_completedWaves = 0;
+
+		StopAllCoroutines();
 
         for(int i = 0; i < this.transform.childCount; i++)
         {
             m_spawnPointTransforms.Add(this.transform.GetChild(i));
-        }
+			SpriteRenderer myRenderer = m_spawnPointTransforms[i].gameObject.GetComponent<SpriteRenderer>();
+			myRenderer.color = new Color(myRenderer.color.r, myRenderer.color.g, myRenderer.color.b, 1);
+
+		}
 
         //StartCoroutine(SpawnPoints());
         
@@ -41,13 +48,16 @@ public class EnemySpawnManager : MonoBehaviour
         {
             StopAllCoroutines();
 
-
-			for(int i = 0; i < m_spawnPointTransforms.Count; i++)
-			{
-				StartCoroutine(ScalePointOpacity(m_spawnPointTransforms[i].gameObject.GetComponent<SpriteRenderer>()));
-			}
 		}
     }
+
+	public void OnComplete()
+	{
+		for (int i = 0; i < m_spawnPointTransforms.Count; i++)
+		{
+			StartCoroutine(ScalePointOpacity(m_spawnPointTransforms[i].gameObject.GetComponent<SpriteRenderer>()));
+		}
+	}
 
     private IEnumerator SpawnPoints()
     {
@@ -57,7 +67,9 @@ public class EnemySpawnManager : MonoBehaviour
             {
                 AddSpawnPoint();
                 yield return new WaitForSeconds(2f);
-            }
+				m_completedWaves++;
+
+			}
 			break;
         }
 

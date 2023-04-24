@@ -80,6 +80,7 @@ public class ScoreDepot : MonoBehaviour
     {
         while (m_playerPresent && !m_isComplete)
         {
+			Debug.Log(currentScore);
             for(int i = 0; i < currentScore; i++)
             {
                 m_currentScoreDeposited++;
@@ -89,8 +90,6 @@ public class ScoreDepot : MonoBehaviour
 
                 //m_spriteRenderer.size = new Vector2(m_currentScoreDeposited * 0.004f, m_currentScoreDeposited * 0.004f);
 				m_fillBar.fillAmount = m_currentScoreDeposited / m_maxScore;
-				Debug.Log("Current Score = " + m_currentScoreDeposited);
-				Debug.Log("Max Score = " + m_maxScore);
 
 
                 yield return new WaitForSeconds(0.04f);
@@ -128,6 +127,7 @@ public class ScoreDepot : MonoBehaviour
 			m_wires[j].GetComponent<SpriteRenderer>().color = Color.green;
 		}
 
+		this.gameObject.GetComponentInParent<LevelArea>().AreaComplete();
 
 		m_depotTracker.OnDepotCompleted(gameObject.transform);
     }

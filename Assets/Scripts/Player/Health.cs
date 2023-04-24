@@ -24,6 +24,10 @@ public class Health : MonoBehaviour
         m_healParticle = GetComponentInChildren<ParticleSystem>();
         m_healParticle?.Stop();
         m_currentHealth = m_healthStats.m_maxHealth;
+		if (gameObject?.GetComponent<PlayerController>())
+		{
+			myHealthChange?.Invoke(m_currentHealth);
+		}
     }
 
     public void Run()

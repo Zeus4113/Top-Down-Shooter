@@ -61,11 +61,14 @@ public class SpawnPoint : MonoBehaviour, IInteractable
     {
         m_isSpawning = true;
 
-        // Spawns enemies of given amount and type
-        for (int i = 0; i < amount; i++)
+		// Spawns enemies of given amount and type
+		for (int i = 0; i < amount; i++)
         {
-            // Spawn enemy and store in array
-            GameObject enemy = Instantiate(enemyType[Random.Range(0, enemyType.Length - 1)], transform.position, transform.rotation);
+
+			if (!m_isActive) yield break;
+
+			// Spawn enemy and store in array
+			GameObject enemy = Instantiate(enemyType[Random.Range(0, enemyType.Length - 1)], transform.position, transform.rotation);
             BasicEnemy basicEnemy = enemy.GetComponent<BasicEnemy>();
             INavigable enemyBase = enemy.GetComponent<INavigable>();
 			Health enemyHealth = enemy.GetComponent<Health>();

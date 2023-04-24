@@ -12,6 +12,8 @@ public interface INavigable
     public void SetPlayerRef(GameObject player);
     public state GetState();
 
+	public GameObject GetGameObject();
+
     public void SetSpeedMultiplier(float newSpeedMultiplier);
 }
 

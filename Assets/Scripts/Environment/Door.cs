@@ -10,6 +10,7 @@ public class Door : MonoBehaviour, IInteractable
     private bool m_isActive;
 	private Color m_ColorLocked;
 	private Color m_ColorUnlocked;
+	private DoorCollider m_doorCollider;
 
 	[SerializeField] private float m_duration;
 	[SerializeField] private bool m_isUnlocked;
@@ -18,6 +19,12 @@ public class Door : MonoBehaviour, IInteractable
 	{
 		m_Renderer = GetComponent<SpriteRenderer>();
 		m_Collider = GetComponent<Collider2D>();
+		m_doorCollider = GetComponentInChildren<DoorCollider>();
+
+		if(m_doorCollider != null)
+		{
+			m_doorCollider.ResetTrigger();
+		}
 
 		m_ColorLocked = new Color(69, 214, 204, 255);
 		m_ColorUnlocked = new Color(219, 41, 44, 255);
