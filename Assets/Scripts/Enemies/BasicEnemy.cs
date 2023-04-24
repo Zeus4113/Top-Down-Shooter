@@ -33,6 +33,7 @@ public class BasicEnemy : MonoBehaviour, INavigable
         m_defaultSpeed = m_enemyStatsSO.m_movementSpeed;
 		m_speed = m_enemyStatsSO.m_movementSpeed;
 		m_attackReset = true;
+		Health.myIsDead += Destroy;
     }
 
     // Update is called once per frame
@@ -90,6 +91,14 @@ public class BasicEnemy : MonoBehaviour, INavigable
 
         }
     }
+
+	public void Destroy(GameObject dead)
+	{
+		if (dead?.GetComponent<PlayerController>())
+		{
+			Destroy(this.gameObject);
+		}
+	}
 
 	public void SetState(state newState)
     {

@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     {
 		m_instance = this;
 
-		Health.myIsDead += OnDeath;
+		//Health.myIsDead += OnDeath;
 
 		GameObject myPlayer = GameObject.Find("PlayerCharacter");
 		m_player = myPlayer.GetComponent<PlayerController>();
@@ -39,14 +39,19 @@ public class GameManager : MonoBehaviour
 		m_mainCamera.Init();
     }
 
-    private void Update()
-    {
+	private void Update()
+	{
 		if (m_player == null) return;
 
 		m_player?.Run();
 		m_weaponManager?.Run();
 		m_enemyManager?.Run();
 		m_mainCamera?.Run();
+
+		if (Input.GetButtonDown("PauseGame") && !SceneManager.GetSceneByName("PauseMenu").isLoaded)
+		{
+			SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
+		}
 
     }
 

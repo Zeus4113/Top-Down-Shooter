@@ -55,4 +55,8 @@ public class LevelArea : MonoBehaviour
 			m_scoreDepot?.SetupHUD(false);
 		}
     }
+
+	public ScoreDepot GetScoreDepot() { return m_scoreDepot; }
+
+	public EnemySpawnManager GetSpawnManager() { return m_spawnManager; }
 }

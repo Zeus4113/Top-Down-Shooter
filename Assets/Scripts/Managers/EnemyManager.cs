@@ -23,6 +23,7 @@ public class EnemyManager : MonoBehaviour
         SpawnPoint.newEnemy += AddEnemy;
         Health.myIsDead += RemoveEnemy;
         SpawnPoint.removeSpawn += RemoveEnemySpawnPoint;
+		Health.myIsDead += ClearEnemies;
 
 		m_doorList.AddRange(GameObject.FindObjectsOfType<Door>());
 
@@ -67,6 +68,14 @@ public class EnemyManager : MonoBehaviour
 
         m_enemies.Remove(myEnemy);
     }
+
+	public void ClearEnemies(GameObject dead)
+	{
+		if (dead?.GetComponent<PlayerController>())
+		{
+			m_enemies.Clear();
+		}
+	}
 
     public void AddEnemySpawnPoint(SpawnPoint newEnemySpawn)
     {

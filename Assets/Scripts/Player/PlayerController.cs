@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     public void Init()
     {
-        m_isSprinting = false;
+		m_isSprinting = false;
 		m_currentScore = 0;
 		m_isInputDisabled = false;
 		m_movementSpeedMultiplier = 1f;

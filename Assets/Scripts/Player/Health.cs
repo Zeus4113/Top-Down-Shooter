@@ -101,7 +101,10 @@ public class Health : MonoBehaviour
 				Destroy(gameObject);
 			}
 
-            myIsDead.Invoke(this.gameObject);
+			if(gameObject != null)
+			{
+				myIsDead.Invoke(this.gameObject);
+			}
 
             return false;
         }

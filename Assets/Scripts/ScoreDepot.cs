@@ -131,4 +131,6 @@ public class ScoreDepot : MonoBehaviour
 
 		m_depotTracker.OnDepotCompleted(gameObject.transform);
     }
+
+	public bool IsComplete() { return m_isComplete; }
 }

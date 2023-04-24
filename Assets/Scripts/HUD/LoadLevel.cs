@@ -15,8 +15,13 @@ public class LoadLevel : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+	public void Unloadlevel(string name)
+	{
+		SceneManager.UnloadSceneAsync(name);
+	}
+
     public void ExitGame()
     {
-        Debug.Log("Not Implemented Yet!");
+		Application.Quit();
     }
 }
