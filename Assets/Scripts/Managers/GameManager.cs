@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     {
 		m_instance = this;
 
-		//Health.myIsDead += OnDeath;
+		//aHealth.myIsDead += OnDeath;
 
 		GameObject myPlayer = GameObject.Find("PlayerCharacter");
 		m_player = myPlayer.GetComponent<PlayerController>();

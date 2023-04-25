@@ -10,7 +10,15 @@ public class ScoreTracker : MonoBehaviour
     private TMPro.TMP_Text m_textMeshPro_1;
 	private TMPro.TMP_Text m_textMeshPro_2;
 
-    private void Start()
+	private void Start()
+	{
+		ScoreDepot.setupHUD += UpdateDeposit;
+		ScoreParticle.OnParticlePickup += ChangeCurrentScore;
+		ScoreDepot.depositTick += ChangeCurrentScore;
+		ScoreDepot.resetHUD += ResetDepositHUD;
+	}
+
+	public void Init()
     {
 		Transform objectHolder = gameObject.transform.GetChild(1);
 		Transform objectHolder2 = gameObject.transform.GetChild(2);
@@ -18,10 +26,8 @@ public class ScoreTracker : MonoBehaviour
 		m_textMeshPro_1 = objectHolder.GetChild(0).GetComponent<TMPro.TMP_Text>();
 		m_textMeshPro_2 = objectHolder2.GetChild(0).GetComponent<TMPro.TMP_Text>();
 
-		ScoreDepot.setupHUD += UpdateDeposit;
-        ScoreParticle.OnParticlePickup += ChangeCurrentScore;
-		ScoreDepot.depositTick += ChangeCurrentScore;
-		ScoreDepot.resetHUD += ResetDepositHUD;
+		currentScore = 0;
+		ChangeCurrentScore(currentScore);
     }
 
     private void ChangeCurrentScore(float amount)

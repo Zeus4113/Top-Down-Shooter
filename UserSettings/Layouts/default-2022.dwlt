@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 121
+  controlID: 152
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 457
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 64
+  controlID: 108
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 65
+  controlID: 97
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -317,22 +317,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/Environment
+    - Assets/ScriptableObjects/HealthStats
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/Environment
+  - Assets/ScriptableObjects/HealthStats
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\kaist\Desktop\Game Projects\TDS\Top-Down-Shooter
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: b6760000
-    m_LastClickedID: 30390
-    m_ExpandedIDs: 000000004a760000667600007276000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 104}
+    m_SelectedIDs: 5c790000
+    m_LastClickedID: 31068
+    m_ExpandedIDs: 0000000086760000a4760000aa760000ac76000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -360,7 +360,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000004a760000
+    m_ExpandedIDs: 0000000086760000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -404,7 +404,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 5}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -488,9 +488,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 8cf5ffff
-      m_LastClickedID: -2676
-      m_ExpandedIDs: 285cfffff2d4ffff8cf4fffffaf4fffffef4ffff7ef5ffff8cf5ffffa0f6fffff0f8ffff1cfbffff7a6c0000da6c00004a6d00005c6f0000c26f00005a7000005e700000827000008a700000
+      m_SelectedIDs: d4720000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 56cafeff92cffeff7ad2fefffed2feffcee5feffa0f0feff9af1feff2afafeffbcfefeff8808ffffba0effff0226ffffbc26ffff2a33ffff5e3effff4844ffff5659ffffc866ffff0074ffffa674ffffcc75ffff887cffff4688ffff8489ffffc099ffff90a0ffff20cdffffb0d1fffffad5ffffa0d6fffffad9ffffa4daffffd8e5ffffc0e8ffff46ebffff0ef0ffffdef0ffff28fbffff28780000b47e000092a1000012a2000038a20000b6aa0000c8aa0000f2ad00008cb10000aa120100145101009e51010000520100f85401009a5501009e550100c4550100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -805,9 +805,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -102.089775, y: -21.328207, z: 0.42336988}
+    m_Target: {x: -89.078476, y: -25.974934, z: -0.5675831}
     speed: 2
-    m_Value: {x: -102.089775, y: -21.328207, z: 0.42336988}
+    m_Value: {x: -89.078476, y: -25.974934, z: -0.5675831}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -857,9 +857,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 90.93153
+    m_Target: 84.42989
     speed: 2
-    m_Value: 90.93153
+    m_Value: 84.42989
   m_Ortho:
     m_Target: 1
     speed: 2

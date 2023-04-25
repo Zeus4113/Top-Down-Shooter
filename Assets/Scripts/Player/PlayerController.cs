@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool m_isSprinting;
 	private float m_currentScore;
 	private bool m_isInputDisabled;
+	private ScoreTracker m_scoreTracker;
 
     [SerializeField] private float m_maxStamina;
     [SerializeField] private float m_sprintSpeed;
@@ -22,7 +23,13 @@ public class PlayerController : MonoBehaviour
     public delegate void UpdateStamina(float stamina);
     public static UpdateStamina myStaminaChange;
 
-    public void Init()
+	private void Start()
+	{
+		ScoreParticle.OnParticlePickup += SetScore;
+		ScoreDepot.depositTick += SetScore;
+	}
+
+	public void Init()
     {
 		m_isSprinting = false;
 		m_currentScore = 0;
@@ -33,9 +40,10 @@ public class PlayerController : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_myCollider = GetComponent<Collider2D>();
         m_position = m_rigidbody.position;
-        gameObject.GetComponentInChildren<Health>().Init(m_healthStats);
-		ScoreParticle.OnParticlePickup += SetScore;
-		ScoreDepot.depositTick += SetScore;
+		m_scoreTracker = FindObjectOfType<ScoreTracker>();
+		m_scoreTracker.Init();
+		gameObject.GetComponentInChildren<Health>().Init(m_healthStats);
+		Debug.Log("Init Score : " + m_currentScore);
 	}
 
     public void Run()
@@ -47,11 +55,13 @@ public class PlayerController : MonoBehaviour
 
 	public float GetScore()
 	{
+		Debug.Log("Player Controller Score: " + m_currentScore);
 		return m_currentScore;
 	}
 
 	public void SetScore(float amount)
 	{
+		Debug.Log("Amount Added: " + amount);
 		m_currentScore += amount;
 	}
 

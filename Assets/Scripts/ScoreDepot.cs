@@ -59,7 +59,7 @@ public class ScoreDepot : MonoBehaviour
             m_playerPresent = true;
             PlayerController playerRef = myObject.GetComponent<PlayerController>();
             StartCoroutine(DepositScore(playerRef.GetScore()));
-			Debug.Log(playerRef.GetScore());
+			Debug.Log("Player Score : " + playerRef.GetScore());
         }
     }
 
@@ -80,7 +80,7 @@ public class ScoreDepot : MonoBehaviour
     {
         while (m_playerPresent && !m_isComplete)
         {
-			Debug.Log(currentScore);
+			Debug.Log("Deposited Score : " + currentScore);
             for(int i = 0; i < currentScore; i++)
             {
                 m_currentScoreDeposited++;

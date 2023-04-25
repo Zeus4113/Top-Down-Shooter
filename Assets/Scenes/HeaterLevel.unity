@@ -2432,6 +2432,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laser Rifle
       objectReference: {fileID: 0}
+    - target: {fileID: 1335108674332664836, guid: 77cb304c079c39645a3e6f84ac300fc4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 452ea1346071a8a4280e7786e6872f00, type: 3}
     - target: {fileID: 1335108674332664839, guid: 77cb304c079c39645a3e6f84ac300fc4, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -4328,6 +4332,18 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 5179837431617572347}
     m_Modifications:
+    - target: {fileID: 1600106135612658605, guid: 3c5da540319cb204e828e56925d4978d, type: 3}
+      propertyPath: m_Size.y
+      value: 3.8005838
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600106135612658605, guid: 3c5da540319cb204e828e56925d4978d, type: 3}
+      propertyPath: m_Offset.y
+      value: 4.1480956
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361622738521237386, guid: 3c5da540319cb204e828e56925d4978d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 56776d0fb96f19f458e4508397280364, type: 3}
     - target: {fileID: 2414229448119130339, guid: 3c5da540319cb204e828e56925d4978d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -4375,6 +4391,18 @@ PrefabInstance:
     - target: {fileID: 6567901336622977646, guid: 3c5da540319cb204e828e56925d4978d, type: 3}
       propertyPath: m_Name
       value: Flamethrower
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972525552092786184, guid: 3c5da540319cb204e828e56925d4978d, type: 3}
+      propertyPath: ShapeModule.m_Position.x
+      value: 0.029996112
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972525552092786184, guid: 3c5da540319cb204e828e56925d4978d, type: 3}
+      propertyPath: ShapeModule.m_Position.y
+      value: 0.947522
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972525552092786184, guid: 3c5da540319cb204e828e56925d4978d, type: 3}
+      propertyPath: ShapeModule.m_Rotation.x
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -56885,6 +56913,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4997141960153477105, guid: 31db61e26445ce14093b06ee75077e34, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a76b4bd5400d36b46ae00831fcad0a02, type: 3}
     - target: {fileID: 4997141960153477111, guid: 31db61e26445ce14093b06ee75077e34, type: 3}
       propertyPath: m_Name
       value: Solvent Launcher
@@ -62916,7 +62948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3740738225520689440, guid: 3ea9c7e344ef954438d7091e3ab30c5c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 34.4
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 3740738225520689440, guid: 3ea9c7e344ef954438d7091e3ab30c5c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -63313,6 +63345,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 859944438164395547, guid: 6a4b9bc3c4ea78143b1cc7d545c429ba, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fb65699dfa6123643ad3fd7ad55e8701, type: 3}
     - target: {fileID: 859944438164395547, guid: 6a4b9bc3c4ea78143b1cc7d545c429ba, type: 3}
       propertyPath: m_SortingOrder
       value: 3
