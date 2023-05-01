@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1897519522070786750, guid: a4120873b1faf1b44b9f47277354a3f7, type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1897519522070786750, guid: a4120873b1faf1b44b9f47277354a3f7, type: 3}
       propertyPath: m_LocalScale.x
@@ -26,11 +26,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1897519522070786750, guid: a4120873b1faf1b44b9f47277354a3f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.93
+      value: -90.86
       objectReference: {fileID: 0}
     - target: {fileID: 1897519522070786750, guid: a4120873b1faf1b44b9f47277354a3f7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.37
+      value: -67.31
       objectReference: {fileID: 0}
     - target: {fileID: 1897519522070786750, guid: a4120873b1faf1b44b9f47277354a3f7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -86,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8851271631920141247, guid: a4120873b1faf1b44b9f47277354a3f7, type: 3}
       propertyPath: m_Name
-      value: Barrel Variant
+      value: Barrel Variant (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects:
@@ -116,7 +116,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 2
+  m_Mass: 16
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

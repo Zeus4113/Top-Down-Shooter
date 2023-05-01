@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RespawnManager : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class RespawnManager : MonoBehaviour
 	[SerializeField] private LevelArea[] m_stages;
 	[SerializeField] private Door[] m_unlockedDoors;
 	[SerializeField] private EnemyManager m_enemyManager;
+	[SerializeField] private WeaponManager m_weaponManager;
 
+	private GameObject m_myPlayer;
+ 
 	public void Start()
 	{
 		Health.myIsDead += OnPlayerRespawn;
@@ -50,6 +54,7 @@ public class RespawnManager : MonoBehaviour
 			player.transform.rotation = m_spawnPoint.rotation;
 			player.GetComponent<PlayerController>().Init();
 
+			m_weaponManager.ResetAmmoOnDeath();
 			m_enemyManager.RemoveAllEnemies();
 			m_enemyManager.RemoveAllSpawns();
 		}

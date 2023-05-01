@@ -61,7 +61,8 @@ public class LaserRifle : MonoBehaviour, IShootable
         {
             canShoot = false;
 
-            RaycastHit2D[] myHit = Physics2D.LinecastAll(firePos.position, transform.up * range);
+			int layerMask = 1 << 6;
+			RaycastHit2D[] myHit = Physics2D.LinecastAll(firePos.position, transform.up * range, layerMask);
             //Handles.DrawLine(transform.position, (transform.up * range), 1f);
 
             Vector3[] myVectors = new Vector3[myHit.Length+1];

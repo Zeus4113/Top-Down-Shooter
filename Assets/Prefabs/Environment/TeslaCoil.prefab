@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4815890108956989765}
   - component: {fileID: 4815890108956989764}
   - component: {fileID: 4815890108956989767}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TeslaCoil
   m_TagString: Untagged
   m_Icon: {fileID: 0}

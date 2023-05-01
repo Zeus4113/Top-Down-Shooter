@@ -18,6 +18,7 @@ public class WeaponManager : MonoBehaviour
     private int updateCount;
     private TMPro.TMP_Text m_ammoText;
     private TMPro.TMP_Text m_weaponText;
+	private int[] defaultReserveAmmo;
 
     public delegate void Pickup();
     public static Pickup shotgunAmmo;
@@ -26,7 +27,9 @@ public class WeaponManager : MonoBehaviour
 
     public void Init()
     {
-        player = GameObject.Find("PlayerCharacter");
+		defaultReserveAmmo = reserveAmmoList;
+
+		player = GameObject.Find("PlayerCharacter");
         mountPos = player.transform.Find("mountPos");
         m_ammoText = m_ammoCounter.GetComponent<TMPro.TMP_Text>();
         m_weaponText = m_weaponName.GetComponent<TMPro.TMP_Text>();
@@ -53,6 +56,17 @@ public class WeaponManager : MonoBehaviour
         int myReserveAmmo = currentWeapon.GetComponent<IShootable>().GetReserveAmmo();
         UpdateCurrentAmmoHUD(myCurrentAmmo, myReserveAmmo);
     }
+
+	public void ResetAmmoOnDeath()
+	{
+		Debug.Log("Ammo Reset");
+		reserveAmmoList = defaultReserveAmmo;
+		SetReserveAmmo();
+
+		int myCurrentAmmo = currentWeapon.GetComponent<IShootable>().GetCurrentAmmo();
+		int myReserveAmmo = currentWeapon.GetComponent<IShootable>().GetReserveAmmo();
+		UpdateCurrentAmmoHUD(myCurrentAmmo, myReserveAmmo);
+	}
     
     public void Run()
     {

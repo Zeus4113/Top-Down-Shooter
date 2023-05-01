@@ -26,8 +26,8 @@ public class Door : MonoBehaviour, IInteractable
 			m_doorCollider.ResetTrigger();
 		}
 
-		m_ColorLocked = new Color(69, 214, 204, 255);
-		m_ColorUnlocked = new Color(219, 41, 44, 255);
+		m_ColorLocked = new Color(m_Renderer.color.r, m_Renderer.color.g, m_Renderer.color.b, 255);
+		m_ColorUnlocked = new Color(m_Renderer.color.r, m_Renderer.color.g, m_Renderer.color.b, 0);
 
 		if (m_isUnlocked)
 		{
@@ -51,14 +51,11 @@ public class Door : MonoBehaviour, IInteractable
 
 	private IEnumerator Open(float duration)
 	{
-		Color myColour = m_Renderer.color;
-		Color newColour = new Color(m_ColorUnlocked.r, m_ColorUnlocked.g, m_ColorUnlocked.b, 0);
-
 		for(float i = 0; i < duration; i += Time.deltaTime)
 		{
 			float normalizedTime = i / duration;
 
-			m_Renderer.color = Color.Lerp(myColour, newColour, normalizedTime);
+			m_Renderer.color = Color.Lerp(m_ColorLocked, m_ColorUnlocked, normalizedTime);
 
 			yield return null;
 		}
@@ -70,15 +67,11 @@ public class Door : MonoBehaviour, IInteractable
 
 	private IEnumerator Close(float duration)
 	{
-
-		Color myColour = m_Renderer.color;
-		Color newColour = new Color(m_ColorLocked.r, m_ColorLocked.g, m_ColorLocked.b, 255);
-
 		for (float i = 0; i < duration; i += Time.deltaTime)
 		{
 			float normalizedTime = i / duration;
 
-			m_Renderer.color = Color.Lerp(myColour, newColour, normalizedTime);
+			m_Renderer.color = Color.Lerp(m_ColorUnlocked, m_ColorLocked, normalizedTime);
 
 			yield return null;
 		}
