@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 		m_weaponManager.Init();
 		m_enemyManager.Init();
 		m_mainCamera.Init();
+
     }
 
 	private void Update()

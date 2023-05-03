@@ -26,8 +26,8 @@ public class Door : MonoBehaviour, IInteractable
 			m_doorCollider.ResetTrigger();
 		}
 
-		m_ColorLocked = new Color(m_Renderer.color.r, m_Renderer.color.g, m_Renderer.color.b, 255);
-		m_ColorUnlocked = new Color(m_Renderer.color.r, m_Renderer.color.g, m_Renderer.color.b, 0);
+		m_ColorLocked = new Color(m_Renderer.color.r, m_Renderer.color.g, m_Renderer.color.b, 1);
+		m_ColorUnlocked = new Color(m_Renderer.color.r, m_Renderer.color.g, m_Renderer.color.b, 0.2f);
 
 		if (m_isUnlocked)
 		{
@@ -40,13 +40,19 @@ public class Door : MonoBehaviour, IInteractable
 	}
 
 	public void Unlock()
-	{;
-		StartCoroutine(Open(m_duration));
+	{
+		//StartCoroutine(Open(m_duration));
+
+		m_Renderer.color = m_ColorUnlocked;
+		m_Collider.enabled = false;
 	}
 
 	public void Lock()
-	{;
-		StartCoroutine(Close(m_duration));
+	{
+		//StartCoroutine(Close(m_duration));
+
+		m_Renderer.color = m_ColorLocked;
+		m_Collider.enabled = true;
 	}
 
 	private IEnumerator Open(float duration)

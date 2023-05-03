@@ -15,7 +15,7 @@ public class EndArea : MonoBehaviour
 
 			playerController.SetDisableInput(true);
 			Debug.Log("Level End!");
-			SceneManager.LoadScene("WinScene");
+			SceneManager.LoadScene("WinScene", LoadSceneMode.Additive);
 		}
 
 	}
